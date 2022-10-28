@@ -101,17 +101,14 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
-
 int		ft_isdigit(int c);
 
 int		ft_printf(const char *fmt, ...);
+void	init_print_info(t_printf_info *info);
+
 int	print_c(char chr, t_printf_info info);
 int	print_s(char *str, t_printf_info info);
-//char	*ret_u(unsigned long num, t_printf_info info);
-//char	*ret_dec(long num, t_printf_info info);
-
 int	print_percent(t_printf_info info);
-
 int print_signed(long num, t_printf_info *info);
 int print_hexadecimal(unsigned long u, t_printf_info *info, bool isupper);
 int	print_unsigned(unsigned long u, t_printf_info info);
@@ -119,6 +116,7 @@ int	print_unsigned(unsigned long u, t_printf_info info);
 size_t	minsize(size_t a, size_t b);
 size_t	maxsize(size_t a, size_t b);
 
+bool is_valid(char c, t_printf_info *info);
 
 
 #endif

@@ -26,6 +26,9 @@ int main() {
 	char *p5 = NULL;
 	char p6;
 
+	ft_printf("%----c", 'a');
+	ft_printf("%c", 'x');
+
 	ft_putstr_fd("\n##### ft_printf vs printf #####\n", 1);//    1     2   3    4     5
 	ft_printf("[c] ft_printf: 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
 	printf(       "    printf   : 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');

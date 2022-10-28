@@ -11,51 +11,13 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-/* If `long' and `int' is effectively the same type we don't have to
-   handle `long separately.  */
-
-size_t	maxsize(size_t a, size_t b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
-}
-
-size_t	minsize(size_t a, size_t b)
-{
-	if (a <= b)
-		return (a);
-	return (b);
-}
-
-size_t	count_types_in_fmt(const char *fmt)
-{
-	size_t		cnt;
-	size_t		i;
-	const char	*types = "cspdiuxX%";
-
-	cnt = 0;
-	i = 0;
-	while (fmt[i] != '\0')
-	{
-		while (fmt[i] != '\0' && fmt[i] != '%')
-			i++;
-		if (fmt[i] != '\0' && ft_strchr(types, fmt[i + 1]))
-		{
-			cnt++;
-			i++;
-		}
-		i++;
-	}
-	return (cnt);
-}
 
 int	print_fmt(va_list *ptr, const char c, t_printf_info info)
 {
 	if (c == 'c')
 		return (print_c(va_arg(*ptr, int), info));
 	if (c == 's')
-		return (print_s(va_arg(*ptr, char*), info));
+		return (print_s(va_arg(*ptr, char *), info));
 	if (c == 'p')
 		return (print_hexadecimal(va_arg(*ptr, unsigned long), &info, false));
 	if (c == 'd' || c == 'i')
@@ -71,115 +33,234 @@ int	print_fmt(va_list *ptr, const char c, t_printf_info info)
 	return (-1);
 }
 
-static void	init_print_info(t_printf_info *info)
+void	check_flag(char *fmt, size_t *i, t_printf_info *info)
 {
-	info->left = false;
-	info->sign = false;
-	info->space = false;
-	info->prefix = false;
-	info->width = 0;
-	info->zero_pad = false;
-	info->dot = false;
-	info->dot_only = false;
-	info->perc = 0;
-	info->base = 10;
-	info->capitals = 0;
-	info->digits = "0123456789abcdef0123456789ABCDEF";
-	info->head_chr = "";
-	info->is_pointer = false;
-	info->size = 0;
-	info->strlen = 0;
-	info->padlen = 0;
-	info->perclen = 0;
-}
+	const char		*flags = "-+ #";
 
-static bool	is_valid_c(t_printf_info info)
-{
-	if (info.sign || info.space || info.zero_pad)
-		return (false);
-	if (info.dot && !info.dot_only) // OK: %.c, NG: %.0c
-		return (false);
-	return (true);
-}
-
-static bool	is_valid_s(t_printf_info info)
-{
-	if (info.sign || info.space || info.zero_pad || info.prefix)
-		return (false);
-	return (true);
-}
-
-static bool	is_valid_p(t_printf_info *info)
-{
-	info->base = 16;
-	info->is_pointer = true;
-	if (info->sign || info->space || info->zero_pad || info->prefix)
-		return (false);
-	if (info->dot && !info->dot_only) // OK: %.p, NG: %.0p
-		return (false);
-	info->prefix = true;
-	return (true);
-}
-
-static bool	is_valid_d(t_printf_info *info)
-{
-	if (info->perc < 0) // 先に決める
+	while (ft_strchr(flags, fmt[*i]) != NULL)
 	{
-		info->dot = false;
-		info->perc = 0;
+//		printf("#DEBUG[check flg fmt:%c]", *fmt);
+		if (fmt[*i] == '-')
+			info->left = true;
+		if (fmt[*i] == '+')
+			info->sign = true;
+		if (fmt[*i] == ' ')
+			info->space = true;
+		if (fmt[*i] == '#')
+			info->prefix = true;
+		*i += 1;
 	}
-	if (info->zero_pad && info->dot)
-		info->zero_pad = false;
-	if ((info->sign && info->space) || info->prefix || (info->zero_pad && info->left))
-		return (false);
+	return ;
+}
+
+static bool	check_width(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
+{
+	if (fmt[*i] == '*' || ft_isdigit(fmt[*i]))
+	{
+//		printf("#DEBUG[check width fmt:%c]", fmt[*i]);
+		while (fmt[*i] == '0')
+		{
+			info->zero_pad = true;
+			*i += 1;
+		}
+		if (fmt[*i] == '*')
+		{
+			info->width = va_arg(*ptr, int);
+			if (info->width < 0)
+			{
+				info->left = true;
+				info->width = -info->width;
+				info->zero_pad = false;
+			}
+			*i += 1;
+			if (info->zero_pad && ft_isdigit(fmt[*i]))
+				return (false);
+		}
+		while (ft_isdigit(fmt[*i]))
+		{
+			info->width = info->width * 10 + fmt[*i] - '0';
+			*i += 1;
+		}
+		if (fmt[*i] == '*')
+			return (false);
+	}
+//	printf("#DEBUG[check width:%d]", info->width);
 	return (true);
 }
 
-static bool	is_valid_u(t_printf_info *info)
+
+static bool	check_perc(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
 {
-	if (info->zero_pad && info->dot)
-		info->zero_pad = false;
-	if (info->sign || info->space || info->prefix)
-		return (false);
+	if (fmt[*i] == '.')
+	{
+//		printf("#DEBUG[check perc fmt:%c]", *fmt);
+		info->dot = true;
+		info->dot_only = true;
+		*i += 1;
+		if (fmt[*i] == '*')
+		{
+			info->perc = va_arg(*ptr, int);
+			if (info->perc < 0)
+				info->perc = -1;
+			info->dot_only = false;
+			*i += 1;
+			if (ft_isdigit(fmt[*i]))
+				return (false);
+		}
+		while (ft_isdigit(fmt[*i]))
+		{
+			info->perc = info->perc * 10 + fmt[*i] - '0';
+			*i += 1;
+		}
+		if (info->perc)
+			info->dot_only = false;
+		if (fmt[*i] == '*')
+			return (false);
+	}
+//	printf("#DEBUG[check perc %d]", info->perc);
 	return (true);
 }
 
-static bool	is_valid_hex(t_printf_info *info)
-{
-	info->base = 16;
-	if (info->zero_pad && info->dot)
-		info->zero_pad = false;
-	if (info->sign || info->space)
-		return (false);
-	return (true);
-}
 
-static bool is_valid(const char c, t_printf_info *info)
-{
-	if (c == 'c')
-		return (is_valid_c(*info));
-	if (c == 's')
-		return (is_valid_s(*info));
-	if (c == 'p')
-		return (is_valid_p(info));
-	if (c == 'd' || c == 'i')
-		return (is_valid_d(info));
-	if (c == 'u')
-		return (is_valid_u(info));
-	if (c == 'x' || c == 'X')
-		return (is_valid_hex(info));
-	if (c == '%')
-		return (true);
-	return (false);
-}
 
 int ft_printf(const char *fmt, ...)
 {
 	va_list 		ptr;
 	size_t			bytes;
-	const char		*flags = "-+ #";
+	size_t			i;
 	t_printf_info	info;
-	int				input;
+	int 			ret_val;
+
+	i = 0;
+	va_start(ptr, fmt);
+	bytes = 0;
+	while (fmt[i])
+	{
+		if (fmt[i] != '%' )
+		{
+			ft_putchar_fd(fmt[i], 1);
+			bytes++;
+			i++;
+			continue ;
+		}
+		i++;
+		init_print_info(&info);
+		check_flag((char *)fmt,&i, &info);
+		if (!check_width((char *)fmt, &i, &info, &ptr))
+			return (-1);
+		if (!check_perc((char *)fmt, &i, &info, &ptr))
+			return (-1);
+		if (!is_valid(fmt[i], &info))
+			return (-1);
+		ret_val = print_fmt(&ptr, fmt[i], info);
+		if (ret_val < 0)
+			return (-1);
+		bytes += ret_val;
+		i++;
+	}
+	va_end(ptr);
+	return ((int)bytes);
+}
+
+
+/*  idx 追加前
+ *
+
+ void	check_flag(char *fmt, t_printf_info *info)
+{
+	const char		*flags = "-+ #";
+
+	while (ft_strchr(flags, *fmt) != NULL)
+	{
+		printf("#DEBUG[check flg fmt:%c]", *fmt);
+		if (*fmt == '-')
+			info->left = true;
+		if (*fmt == '+')
+			info->sign = true;
+		if (*fmt == ' ')
+			info->space = true;
+		if (*fmt == '#')
+			info->prefix = true;
+		*fmt += 1;
+	}
+	return ;
+}
+
+static bool	check_width(char *fmt, t_printf_info *info, va_list *ptr)
+{
+	if (*fmt == '*' || ft_isdigit(*fmt))
+	{
+		printf("#DEBUG[check width fmt:%c]", *fmt);
+		while (*fmt == '0')
+		{
+			info->zero_pad = true;
+			*fmt += 1;
+		}
+		if (*fmt == '*')
+		{
+			info->width = va_arg(*ptr, int);
+			if (info->width < 0)
+			{
+				info->left = true;
+				info->width = -info->width;
+				info->zero_pad = false;
+			}
+			*fmt += 1;
+			if (info->zero_pad && ft_isdigit(*fmt))
+				return (false);
+		}
+		while (ft_isdigit(*fmt))
+		{
+			info->width = info->width * 10 + *fmt - '0';
+			*fmt += 1;
+		}
+		if (*fmt == '*')
+			return (false);
+	}
+	printf("#DEBUG[check width:%d]", info->width);
+	return (true);
+}
+
+
+static bool	check_perc(char *fmt, t_printf_info *info, va_list *ptr)
+{
+	if (*fmt == '.')
+	{
+		printf("#DEBUG[check perc fmt:%c]", *fmt);
+		info->dot = true;
+		info->dot_only = true;
+		*fmt += 1;
+		if (*fmt == '*')
+		{
+			info->perc = va_arg(*ptr, int);
+			if (info->perc < 0)
+				info->perc = -1;
+			info->dot_only = false;
+			*fmt += 1;
+			if (ft_isdigit(*fmt))
+				return (false);
+		}
+		while (ft_isdigit(*fmt))
+		{
+			info->perc = info->perc * 10 + *fmt - '0';
+			*fmt += 1;
+		}
+		if (info->perc)
+			info->dot_only = false;
+		if (*fmt == '*')
+			return (false);
+	}
+	printf("#DEBUG[check perc %d]", info->perc);
+	return (true);
+}
+
+
+
+int ft_printf(const char *fmt, ...)
+{
+	va_list 		ptr;
+	size_t			bytes;
+	t_printf_info	info;
 	int 			ret_val;
 
 	va_start(ptr, fmt);
@@ -190,89 +271,30 @@ int ft_printf(const char *fmt, ...)
 		{
 			ft_putchar_fd(*fmt, 1);
 			bytes++;
-			fmt++;
+			i++;
 			continue ;
 		}
-		fmt++; // next of %
+		i++;
 		init_print_info(&info);
-		// flg check : [-+ #] //
-		while (ft_strchr(flags, *fmt) != NULL)
-		{
-			if (*fmt == '-')
-				info.left = true;
-			if (*fmt == '+')
-				info.sign = true;
-			if (*fmt == ' ')
-				info.space = true;
-			if (*fmt == '#')
-				info.prefix = true;
-			fmt++;
-		}
-		// width : [* or num]
-		if (*fmt == '*' || ft_isdigit(*fmt))
-		{
-			while (*fmt == '0')
-			{
-				info.zero_pad = true;
-				fmt++;
-			}
-			if (*fmt == '*') // *の場合引数はint
-			{
-				input = va_arg(ptr, int);
-				if (input < 0)
-				{
-					info.left = true;
-					input = -input;
-					info.zero_pad = false; // input < 0 で zeropad無視
-				}
-				info.width = input;
-				fmt++;
-				if (info.zero_pad && ft_isdigit(*fmt))
-					return (-1); // [* num]
-			}
-			while (ft_isdigit(*fmt))
-			{
-				info.width = info.width * 10 + *fmt - '0';
-				fmt++;
-			}
-			if (*fmt == '*')
-				return (-1); // [num *]
-		}
-		// perc
-		if (*fmt == '.') //. only -> next
-		{
-			info.dot = true;
-			info.dot_only = true;
-			fmt++; // next of .
-			if (*fmt == '*') // *の場合引数はint, - の場合left
-			{
-				info.perc = va_arg(ptr, int);
-				if (info.perc < 0)
-					info.perc = -1;
-				info.dot_only = false;
-				fmt++;
-				if (ft_isdigit(*fmt))
-					return (-1); // [* num]
-			}
-			while (ft_isdigit(*fmt))
-			{
-				info.perc = info.perc * 10 + *fmt - '0';
-				fmt++;
-			}
-			if (info.perc)
-				info.dot_only = false;
-			if (*fmt == '*')
-				return (-1); // [num *]
-		}
+		check_flag((char *)fmt, &info);
+		if (!check_width((char *)fmt, &info, &ptr))
+			return (-1);
+		if (!check_perc((char *)fmt, &info, &ptr))
+			return (-1);
+		printf("[before valid]");
 		if (!is_valid(*fmt, &info))
 			return (-1);
-
+		printf("[after valid]");
 		ret_val = print_fmt(&ptr, *fmt, info);
 		if (ret_val < 0)
 			return (-1);
 		bytes += ret_val;
-		fmt++;
+		i++;
 	}
 	va_end(ptr);
 	return ((int)bytes);
 }
+
+
+ *
+ */

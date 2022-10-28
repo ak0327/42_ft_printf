@@ -62,29 +62,6 @@ char	*ft_itoa(long long num)
 	return (ret);
 }
 
-//char	*ft_itoa(int n)
-//{
-//	long long	num;
-//	char		*ret;
-//	size_t		itoa_len;
-//	size_t		is_negative;
-//
-//	set_params(n, &num, &itoa_len, &is_negative);
-//	ret = (char *) malloc(sizeof(char) * (itoa_len + 1));
-//	if (ret == NULL)
-//		return (NULL);
-//	if (is_negative == 1)
-//		ret[0] = '-';
-//	ret[itoa_len] = '\0';
-//	while (itoa_len > is_negative)
-//	{
-//		ret[itoa_len - 1] = (char)(num % 10 + '0');
-//		num /= 10;
-//		itoa_len--;
-//	}
-//	return (ret);
-//}
-
 static size_t	get_u_num_digits(unsigned int num)
 {
 	size_t	num_digits;

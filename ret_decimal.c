@@ -44,8 +44,6 @@ void	set_params(unsigned long u, t_printf_info *info)
 	size_t	len;
 
 	len = 0;
-	if (u == 0 && info->head_chr && !info->is_pointer)
-		info->head_chr = "";
 	if (!info->dot_only && u == 0)
 		len += 1;
 	while (u > 0)
@@ -78,6 +76,8 @@ int	print_unsigned(unsigned long u, t_printf_info info)
 	if (!numstr)
 		return (-1);
 	ret_bytes = 0;
+	if (u == 0 && info.head_chr && !info.is_pointer)
+		info.head_chr = "";
 	set_params(u, &info);
 	if (!info.left && info.padlen)
 		while (info.padlen--)
