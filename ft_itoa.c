@@ -27,9 +27,8 @@ static int	get_num_digits(long long num)
 	return (num_digits);
 }
 
-static void	set_params(int n, long long *num, size_t *len, size_t *is_neg)
+static void	set_params(long long *num, size_t *len, size_t *is_neg)
 {
-	*num = (long long)n;
 	*len = 0;
 	*is_neg = 0;
 	if (*num < 0)
@@ -41,14 +40,13 @@ static void	set_params(int n, long long *num, size_t *len, size_t *is_neg)
 	*len += get_num_digits(*num);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long long num)
 {
-	long long	num;
 	char		*ret;
 	size_t		itoa_len;
 	size_t		is_negative;
 
-	set_params(n, &num, &itoa_len, &is_negative);
+	set_params(&num, &itoa_len, &is_negative);
 	ret = (char *) malloc(sizeof(char) * (itoa_len + 1));
 	if (ret == NULL)
 		return (NULL);
@@ -63,6 +61,29 @@ char	*ft_itoa(int n)
 	}
 	return (ret);
 }
+
+//char	*ft_itoa(int n)
+//{
+//	long long	num;
+//	char		*ret;
+//	size_t		itoa_len;
+//	size_t		is_negative;
+//
+//	set_params(n, &num, &itoa_len, &is_negative);
+//	ret = (char *) malloc(sizeof(char) * (itoa_len + 1));
+//	if (ret == NULL)
+//		return (NULL);
+//	if (is_negative == 1)
+//		ret[0] = '-';
+//	ret[itoa_len] = '\0';
+//	while (itoa_len > is_negative)
+//	{
+//		ret[itoa_len - 1] = (char)(num % 10 + '0');
+//		num /= 10;
+//		itoa_len--;
+//	}
+//	return (ret);
+//}
 
 static size_t	get_u_num_digits(unsigned int num)
 {
@@ -79,22 +100,21 @@ static size_t	get_u_num_digits(unsigned int num)
 	return (num_digits);
 }
 
-#include <stdio.h>
-char	*ft_uitoa(unsigned int n)
+char	*ft_utoa(unsigned int n)
 {
 	char	*ret;
-	size_t	uitoa_len;
+	size_t	utoa_len;
 
-	uitoa_len = get_u_num_digits(n);
-	ret = (char *) malloc(sizeof(char) * (uitoa_len + 1));
+	utoa_len = get_u_num_digits(n);
+	ret = (char *) malloc(sizeof(char) * (utoa_len + 1));
 	if (ret == NULL)
 		return (NULL);
-	ret[uitoa_len] = '\0';
-	while (uitoa_len > 0)
+	ret[utoa_len] = '\0';
+	while (utoa_len > 0)
 	{
-		ret[uitoa_len - 1] = (char)(n % 10 + '0');
+		ret[utoa_len - 1] = (char)(n % 10 + '0');
 		n /= 10;
-		uitoa_len--;
+		utoa_len--;
 	}
 	return (ret);
 }

@@ -18,30 +18,86 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <stdarg.h>
+#include <stdio.h>
+
+#if INT_MAX == LONG_MAX
+# define is_long_num	0
+#else
+# define is_long_num	is_long
+#endif
+
+#if LONG_MAX == LONG_LONG_MAX
+# define is_longlong 0
+#endif
+
+
 
 typedef struct s_pritnf_info
 {
 	//flag
-	unsigned	left; /* - flag */
-	unsigned	sign; /* + flag */
-	unsigned	space; /* space flag */
-	unsigned	prefix; /* # flag */
+//	unsigned	left; /* - flag */
+//	unsigned	sign; /* + flag */
+//	unsigned	space; /* space flag */
+//	unsigned	prefix; /* # flag */
+
+
+	bool		left;//
+	bool		sign;//
+	bool		space;//
+	bool		prefix;//
+
+
 
 	// width
-	unsigned 	width; /* width */
-	unsigned	zero_pad;
+	bool		zero_pad;
+	int		 	width; /* width */ // >= 0
 
-	//perc
-	unsigned	perc;
+	bool		zero_pad_width;//
+	bool		width_zero_pad;
 
-	bool		put_minus;
+	// perc
+//	unsigned	dot;
+
+	bool		dot;
+	bool		dot_only;
+	int			perc; // >=0 or -1
+
+
+	unsigned	perc_width;//
+	unsigned 	perc_zero_pad;//
+
+	// others
+	int 		minus;
+	bool		show_sign;
+	bool		is_null; //TODO lenで対応？
+	bool		sign_exist;
+	char		decimal_sign;
+
+	// apple
+	char	sign_char;
+	char	pad_char;
+
+	bool	is_signed;
+	int 	base;
+	int 	capitals;
+	bool	altfmt;
+
+	// add
+	char	*digits;
+	char	*prefix_char;
+	char	*head_c;
+
+//	bool	is_perc;
+	bool	is_pointer; // %p 0x0
+
 }					t_printf_info;
 
-void	ft_putstr_fd(char *s, int fd);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd); // change
 size_t	ft_strlen(const char *s);
 
-char	*ft_itoa(int n);
-char	*ft_uitoa(unsigned int n);
+char	*ft_itoa(long long n);
+char	*ft_utoa(unsigned int n);
 char	*ft_strchr(const char *s, int c);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -49,16 +105,24 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 
-int	ft_isdigit(int c);
-int ft_printf(const char *fmt, ...);
+int		ft_isdigit(int c);
 
-int	ft_putchar_fd(char c, int fd);
-//int	ft_putstr_fd(char *s, int fd);
-int	ft_putnbr_fd(int n, int fd);
-int	ft_put_unsigned_nbr_fd(unsigned int n, int fd);
+int		ft_printf(const char *fmt, ...);
+int	print_c(char chr, t_printf_info info);
+int	print_s(char *str, t_printf_info info);
+//char	*ret_u(unsigned long num, t_printf_info info);
+//char	*ret_dec(long num, t_printf_info info);
+
+int	print_percent(t_printf_info info);
+
+int print_signed(long num, t_printf_info *info);
+int print_unsigned(unsigned int u, t_printf_info *info);
+int print_hexadecimal(unsigned long u, t_printf_info *info, bool isupper);
 
 size_t	minsize(size_t a, size_t b);
 size_t	maxsize(size_t a, size_t b);
+
+
 
 #endif
 

@@ -16,16 +16,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 NAME		= libftprintf.a
 
-SRCS		= ft_pirntf.c \
-				ft_strlen.c \
-              	ft_strchr.c \
-              	ft_memset.c \
-              	ft_bzero.c \
-              	ft_memcpy.c \
-              	ft_isdigit.c \
-              	ft_calloc.c \
-              	ft_itoa.c \
-              	ft_putstr_fd.c \
+SRCS		= ft_printf.c ft_bzero.c ft_calloc.c ft_isdigit.c ft_itoa.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putstr_fd.c ft_putchar_fd.c ft_strchr.c ft_strlen.c
 
 OBJS		= $(SRCS:.c=.o)
 

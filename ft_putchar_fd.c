@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 10:37:09 by takira            #+#    #+#             */
-/*   Updated: 2022/10/17 10:37:10 by takira           ###   ########.fr       */
+/*   Created: 2022/10/17 10:36:29 by takira            #+#    #+#             */
+/*   Updated: 2022/10/17 10:36:31 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr_fd(char *s, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
-	size_t	len;
-
-	if (s == NULL)
-		return (0);
-	len = ft_strlen(s);
-	return (write(fd, s, len));
+	return (write(fd, &c, sizeof(char)));
 }
