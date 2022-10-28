@@ -50,14 +50,6 @@ size_t	count_types_in_fmt(const char *fmt)
 	return (cnt);
 }
 
-
-
-//	printf("#DEBUG[ret_c chr:%c]", chr);
-//	printf("#DEBUG[ret_c size:%zu]", size);
-// string: min(len, prefix)
-// width: max(width, string)
-//	printf("#DEBUG[ret_p size:%zu]", size);
-
 int	print_fmt(va_list *ptr, const char c, t_printf_info info)
 {
 	if (c == 'c')
@@ -69,7 +61,7 @@ int	print_fmt(va_list *ptr, const char c, t_printf_info info)
 	if (c == 'd' || c == 'i')
 		return (print_signed(va_arg(*ptr, long), &info));
 	if (c == 'u')
-		return (print_unsigned(va_arg(*ptr, unsigned int), &info));
+		return (print_unsigned(va_arg(*ptr, unsigned int), info));
 	if (c == 'x')
 		return (print_hexadecimal(va_arg(*ptr, unsigned long), &info, false));
 	if (c == 'X')
@@ -81,43 +73,28 @@ int	print_fmt(va_list *ptr, const char c, t_printf_info info)
 
 static void	init_print_info(t_printf_info *info)
 {
-	// flag
 	info->left = false;
 	info->sign = false;
 	info->space = false;
 	info->prefix = false;
-
-	// width
 	info->width = 0;
 	info->zero_pad = false;
-	info->zero_pad = false;
-
-	// perc
 	info->dot = false;
 	info->dot_only = false;
 	info->perc = 0;
-
-	// others
-	info->minus = 0;
-	info->show_sign = false;
-	info->is_null = false;
-	info->sign_exist = false;
-
-	// add
-	info->sign_char = 0;
 	info->base = 10;
 	info->capitals = 0;
-
 	info->digits = "0123456789abcdef0123456789ABCDEF";
-	info->head_c = "";
-//	info->is_perc = false;
+	info->head_chr = "";
 	info->is_pointer = false;
-
+	info->size = 0;
+	info->strlen = 0;
+	info->padlen = 0;
+	info->perclen = 0;
 }
 
 static bool	is_valid_c(t_printf_info info)
 {
-//	printf("#DEBUG[is_valid_c sign:%d, space:%d, zeropad:%d, dotonly:%d]", info.sign, info.space, info.zero_pad, info.dot_only);
 	if (info.sign || info.space || info.zero_pad)
 		return (false);
 	if (info.dot && !info.dot_only) // OK: %.c, NG: %.0c
@@ -170,7 +147,6 @@ static bool	is_valid_u(t_printf_info *info)
 static bool	is_valid_hex(t_printf_info *info)
 {
 	info->base = 16;
-
 	if (info->zero_pad && info->dot)
 		info->zero_pad = false;
 	if (info->sign || info->space)
@@ -254,13 +230,11 @@ int ft_printf(const char *fmt, ...)
 				if (info.zero_pad && ft_isdigit(*fmt))
 					return (-1); // [* num]
 			}
-//			printf("#DEBUG[before while info.width:%u]", info.width);
 			while (ft_isdigit(*fmt))
 			{
 				info.width = info.width * 10 + *fmt - '0';
 				fmt++;
 			}
-//			printf("#DEBUG[after while info.width:%u]", info.width);
 			if (*fmt == '*')
 				return (-1); // [num *]
 		}
@@ -287,7 +261,6 @@ int ft_printf(const char *fmt, ...)
 			}
 			if (info.perc)
 				info.dot_only = false;
-//			printf("#DEBUG[ft_printf info.perc:%u]", info.perc);
 			if (*fmt == '*')
 				return (-1); // [num *]
 		}
@@ -303,4 +276,3 @@ int ft_printf(const char *fmt, ...)
 	va_end(ptr);
 	return ((int)bytes);
 }
-

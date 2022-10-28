@@ -41,19 +41,17 @@ typedef struct s_pritnf_info
 //	unsigned	prefix; /* # flag */
 
 
-	bool		left;//
-	bool		sign;//
-	bool		space;//
-	bool		prefix;//
-
-
+	bool		left;
+	bool		sign;
+	bool		space;
+	bool		prefix;
 
 	// width
 	bool		zero_pad;
 	int		 	width; /* width */ // >= 0
 
-	bool		zero_pad_width;//
-	bool		width_zero_pad;
+//	bool		zero_pad_width;//
+//	bool		width_zero_pad;
 
 	// perc
 //	unsigned	dot;
@@ -63,33 +61,32 @@ typedef struct s_pritnf_info
 	int			perc; // >=0 or -1
 
 
-	unsigned	perc_width;//
-	unsigned 	perc_zero_pad;//
+//	unsigned	perc_width;//
+//	unsigned 	perc_zero_pad;//
 
 	// others
-	int 		minus;
-	bool		show_sign;
-	bool		is_null; //TODO lenで対応？
-	bool		sign_exist;
-	char		decimal_sign;
+//	int 		minus;
+//	bool		show_sign;
+//	bool		is_null; //TODO lenで対応？
+//	bool		sign_exist;
+//	char		decimal_sign;
 
-	// apple
-	char	sign_char;
-	char	pad_char;
+//	char	sign_char;
+//	char	pad_char;
 
-	bool	is_signed;
+//	bool	is_signed;
 	int 	base;
 	int 	capitals;
-	bool	altfmt;
 
-	// add
 	char	*digits;
-	char	*prefix_char;
-	char	*head_c;
+	char	*head_chr;
 
-//	bool	is_perc;
 	bool	is_pointer; // %p 0x0
 
+	size_t	size;
+	size_t	strlen;
+	size_t	padlen;
+	size_t	perclen;
 }					t_printf_info;
 
 int		ft_putchar_fd(char c, int fd);
@@ -116,8 +113,8 @@ int	print_s(char *str, t_printf_info info);
 int	print_percent(t_printf_info info);
 
 int print_signed(long num, t_printf_info *info);
-int print_unsigned(unsigned int u, t_printf_info *info);
 int print_hexadecimal(unsigned long u, t_printf_info *info, bool isupper);
+int	print_unsigned(unsigned long u, t_printf_info info);
 
 size_t	minsize(size_t a, size_t b);
 size_t	maxsize(size_t a, size_t b);
