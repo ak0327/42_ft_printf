@@ -273,7 +273,7 @@ int main() {
 	void *c = NULL;
 	printf("  p : a->%p, b->%p, c->%p, p->%p\n", &a, &b, c, p);
 	printf("  lx: a->%lx, b->%lx, c->%lx, p->%lx\n", (long)&a, (long)&b, (long)c, (long)p);
-	printf("  size : a->%zu, b->%zu, c->%zu, p->%zu\n", sizeof(&a), sizeof(&b), sizeof(c), sizeof(p));
+	printf("  printsize : a->%zu, b->%zu, c->%zu, p->%zu\n", sizeof(&a), sizeof(&b), sizeof(c), sizeof(p));
 
 	printf("[%%d]\n");
 	printf("  0->%d, 1->%d, -1->%d\n", 0, 1, -1);

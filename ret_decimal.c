@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-char	*convert_u2base(unsigned long u, int base, int capitals)
+static char	*convert_u2base(unsigned long u, int base, int capitals)
 {
 	size_t			len;
 	unsigned long	num;
@@ -27,7 +27,7 @@ char	*convert_u2base(unsigned long u, int base, int capitals)
 		num /= base;
 		len += 1;
 	}
-	ret = (char *) calloc(sizeof(char), len + 1);
+	ret = (char *)ft_calloc(sizeof(char), len + 1);
 	if (!ret)
 		return (NULL);
 	while (len)
@@ -39,7 +39,7 @@ char	*convert_u2base(unsigned long u, int base, int capitals)
 	return (ret);
 }
 
-void	set_params(unsigned long u, t_printf_info *info)
+static void	set_num_params(unsigned long u, t_printf_info *info)
 {
 	size_t	len;
 
@@ -78,7 +78,7 @@ int	print_unsigned(unsigned long u, t_printf_info info)
 	ret_bytes = 0;
 	if (u == 0 && info.head_chr && !info.is_pointer)
 		info.head_chr = "";
-	set_params(u, &info);
+	set_num_params(u, &info);
 	if (!info.left && info.padlen)
 		while (info.padlen--)
 			ret_bytes += ft_putchar_fd(' ', 1);

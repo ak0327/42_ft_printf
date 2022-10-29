@@ -26,7 +26,7 @@ void	init_print_info(t_printf_info *info)
 	info->perc = 0;
 	info->base = 10;
 	info->capitals = 0;
-	info->size = 0;
+	info->printsize = 0;
 	info->strlen = 0;
 	info->padlen = 0;
 	info->perclen = 0;

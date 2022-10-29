@@ -83,7 +83,7 @@ static bool	is_valid_hex(t_printf_info *info, char type)
 	return (false);
 }
 
-bool	is_valid(char c, t_printf_info *info)
+bool	is_flag_valid(char c, t_printf_info *info)
 {
 	if (c == 'c')
 		return (is_valid_strs(*info, 'c'));

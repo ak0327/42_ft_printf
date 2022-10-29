@@ -17,15 +17,15 @@ int	print_c(char chr, t_printf_info info)
 	int		ret_bytes;
 
 	ret_bytes = 0;
-	info.size = maxsize(info.width, 1);
-	if (info.size == 1)
+	info.printsize = maxsize(info.width, 1);
+	if (info.printsize == 1)
 		return (ft_putchar_fd(chr, 1));
 	if (info.left)
 	{
 		ret_bytes += ft_putchar_fd(chr, 1);
-		info.size--;
+		info.printsize--;
 	}
-	while (info.size-- > !info.left)
+	while (info.printsize-- > !info.left)
 		ret_bytes += ft_putchar_fd(' ', 1);
 	if (!info.left)
 		ret_bytes += ft_putchar_fd(chr, 1);
@@ -43,9 +43,9 @@ int	print_s(char *str, t_printf_info info)
 		info.strlen = ft_strlen(str);
 	else
 		info.strlen = minsize(ft_strlen(str), info.perc);
-	info.size = maxsize(info.width, info.strlen);
-	if (info.size > info.strlen)
-		info.padlen = info.size - info.strlen;
+	info.printsize = maxsize(info.width, info.strlen);
+	if (info.printsize > info.strlen)
+		info.padlen = info.printsize - info.strlen;
 	if (info.left)
 		while (info.strlen--)
 			ret_bytes += ft_putchar_fd(*str++, 1);
@@ -65,10 +65,10 @@ int	print_percent(t_printf_info info)
 	ret_bytes = 0;
 	if ((info.left || !info.width) && info.zero_pad)
 		info.zero_pad = 0;
-	info.size = maxsize(info.width, 1);
-	if (info.size == 1)
+	info.printsize = maxsize(info.width, 1);
+	if (info.printsize == 1)
 		return (ft_putchar_fd('%', 1));
-	info.padlen = info.size - 1;
+	info.padlen = info.printsize - 1;
 	if (info.left)
 		ret_bytes += ft_putchar_fd('%', 1);
 	if (info.zero_pad)
