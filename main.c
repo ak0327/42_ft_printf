@@ -26,60 +26,121 @@ int main() {
 	char *p5 = NULL;
 	char p6;
 
+	int ok_basic = 0;
+	int ok_bonus = 0;
+	int ng_basic = 0;
+	int ng_bonus = 0;
+
 	ft_printf("%----c", 'a');
 	ft_printf("%c", 'x');
 
+/* ## BASIC ## */
 	ft_putstr_fd("\n##### ft_printf vs printf #####\n", 1);//    1     2   3    4     5
-	ft_printf("[c] ft_printf: 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
-	printf(       "    printf   : 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
+	int cf01 = ft_printf("[c] ft_printf: 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
+	int cl01 = printf(       "    printf   : 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
+	printf("ft:%d, printf:%d\n", cf01, cl01);
+	printf("%s\n", cf01 != cl01 ? "!! NG !!" : "");
 	printf("\n");//                                                       1      2     3      4     5     6
-	ft_printf("[s] ft_printf: 1:%s, 2:%s, 3:%s, 4:%s, 5:%s, 6:%s [END]\n", "aaa", "bb", "CCC", "4", "555", p5);
-	printf(       "    printf   : 1:%s, 2:%s, 3:%s, 4:%s, 5:%s, 6:%s [END]\n", "aaa", "bb", "CCC", "4", "555", p5);
+
+	int sf01 = ft_printf("[s] ft_printf: 1:%s, 2:%s, 3:%s, 4:%s, 5:%s, 6:%s [END]\n", "aaa", "bb", "CCC", "4", "555", p5);
+	int sl01 = printf(       "    printf   : 1:%s, 2:%s, 3:%s, 4:%s, 5:%s, 6:%s [END]\n", "aaa", "bb", "CCC", "4", "555", p5);
+	printf("ft:%d, printf:%d\n", sf01, sl01);
+	printf("%s\n", sf01 != sl01 ? "!! NG !!" : "");
 	printf("\n");//                                                       1    2    3    4    5     6
-	ft_printf("[p] ft_printf: 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6);
-	printf(       "     printf  : 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6);
+	int pf01 = ft_printf("[p] ft_printf: 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6);
+	int pl01 = printf(       "     printf  : 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6);
 	printf(       "     printflx: 1:  %lx, 2:  %lx, 3:  %lx, 4:  %lx, 5:  %lx, 6:  %lx [END]\n", (long)&p1, (long)&p2, (long)&p3, (long)&p4, (long)&p5, (long)&p6);
+	printf("ft:%d, printf:%d\n", pf01, pl01);
+	printf("%s\n", pf01 != pl01 ? "!! NG !!" : "");
+
+	printf("\n");//                                                       0    2    3   4   5          6
+	int df01 = ft_printf("[d] ft_printf: 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d, 7:%d, 8:%d, 9:%d [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
+	int dl01 = printf(       "    printf   : 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d, 7:%d, 8:%d, 9:%d [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
+	printf("ft:%d, printf:%d\n", df01, dl01);
+	printf("%s\n", df01 != dl01 ? "!! NG !!" : "");
 
 	printf("\n");//                                                       1    2    3   4   5          6
-	ft_printf("[d] ft_printf: 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d, 7:%d, 8:%d, 9:%d [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
-	printf(       "    printf   : 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d, 7:%d, 8:%d, 9:%d [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
+	int if01 = ft_printf("[i] ft_printf: 1:%i, 2:%i, 3:%i, 4:%i, 5:%i, 6:%i, 7:%i, 8:%i, 9:%i [END]\n", 111, 222, -0, -2, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
+	int il01 = printf(       "    printf   : 1:%i, 2:%i, 3:%i, 4:%i, 5:%i, 6:%i, 7:%i, 8:%i, 9:%i [END]\n", 111, 222, -0, -2, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
+	printf("ft:%d, printf:%d\n", if01, il01);
+	printf("%s\n", if01 != il01 ? "!! NG !!" : "");
+
 	printf("\n");//                                                       1    2    3   4   5          6
-	ft_printf("[i] ft_printf: 1:%i, 2:%i, 3:%i, 4:%i, 5:%i, 6:%i, 7:%i, 8:%i, 9:%i [END]\n", 111, 222, -0, -2, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
-	printf(       "    printf   : 1:%i, 2:%i, 3:%i, 4:%i, 5:%i, 6:%i, 7:%i, 8:%i, 9:%i [END]\n", 111, 222, -0, -2, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
-	printf("\n");//                                                       1    2    3   4   5          6
-	ft_printf("[u] ft_printf: 1:%u, 2:%u, 3:%u, 4:%u, 5:%u, 6:%u [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN);
-	printf(       "    printf   : 1:%u, 2:%u, 3:%u, 4:%u, 5:%u, 6:%u [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN);
+	int uf01 = ft_printf("[u] ft_printf: 1:%u, 2:%u, 3:%u, 4:%u, 5:%u, 6:%u [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN);
+	int ul01 = printf(       "    printf   : 1:%u, 2:%u, 3:%u, 4:%u, 5:%u, 6:%u [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN);
+	printf("ft:%d, printf:%d\n", uf01, ul01);
+	printf("%s\n", uf01 != ul01 ? "!! NG !!" : "");
+
 	printf("\n");//                                                                         1  2  3   4    5      6      7    8         9
-	ft_printf("[x] ft_printf: 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
-	printf(       "    printf   : 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+	int xf01 = ft_printf("[x] ft_printf: 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+	int xl01 = printf(       "    printf   : 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+	printf("ft:%d, printf:%d\n", xf01, xl01);
+	printf("%s\n", xf01 != xl01 ? "!! NG !!" : "");
+
 	printf("\n");//                                                                         1  2  3   4    5      6      7    8         9
-	ft_printf("[X] ft_printf: 1:%X, 2:%X, 3:%X, 4:%X, 5:%X, 6:%X, 7:%X, 8:%X, 9:%X [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
-	printf(       "    printf   : 1:%X, 2:%X, 3:%X, 4:%X, 5:%X, 6:%X, 7:%X, 8:%X, 9:%X [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+	int xuf01 = ft_printf("[X] ft_printf: 1:%X, 2:%X, 3:%X, 4:%X, 5:%X, 6:%X, 7:%X, 8:%X, 9:%X [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+	int xul01 = printf(       "    printf   : 1:%X, 2:%X, 3:%X, 4:%X, 5:%X, 6:%X, 7:%X, 8:%X, 9:%X [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+	printf("ft:%d, printf:%d\n", xuf01, xul01);
+	printf("%s\n", xuf01 != xul01 ? "!! NG !!" : "");
+
 	printf("\n");
-	ft_printf("[%%] ft_printf: 1:%%, 2:%%, 3:%%%% [END]\n");
-	printf(       "    printf   : 1:%%, 2:%%, 3:%%%% [END]\n"); // 奇数はコンパイルエラー
-	printf("\n");//                                                                         d         i     p      s       u    x
-	ft_printf("[all] ft_printf: abc[%d]efgh[%i]jklmno[%p]qr[%s]t[%u]vw[%x]yz%%%% [END]\n", INT_MAX, INT_MIN, &p1, "TEST%d", 111, 255);
-	printf(       "      printf   : abc[%d]efgh[%i]jklmno[%p]qr[%s]t[%u]vw[%x]yz%%%% [END]\n", INT_MAX, INT_MIN, &p1, "TEST%d", 111, 255);
-	printf("\n");//                                                                         d         i     p      s       u    x
-	ft_printf("[flg] ft_printf: %------++++d [END]\n", 123);
-	printf(       "      printf   : %------++++d [END]\n", 123);
+	int percf01 = ft_printf("[%%] ft_printf: 1:%%, 2:%%, 3:%%%% [END]\n");
+	int percl01 = printf(       "    printf   : 1:%%, 2:%%, 3:%%%% [END]\n"); // 奇数はコンパイルエラー
+	printf("ft:%d, printf:%d\n", percf01, percl01);
+	printf("%s\n", percf01 != percl01 ? "!! NG !!" : "");
 
+	printf("\n");//                                                                         d         i     p      s       u    x
+	int allf01 = ft_printf("[all] ft_printf: abc[%d]efgh[%i]jklmno[%p]qr[%s]t[%u]vw[%x]yz%%%% [END]\n", INT_MAX, INT_MIN, &p1, "TEST%d", 111, 255);
+	int alll01 = printf(       "      printf   : abc[%d]efgh[%i]jklmno[%p]qr[%s]t[%u]vw[%x]yz%%%% [END]\n", INT_MAX, INT_MIN, &p1, "TEST%d", 111, 255);
+	printf("ft:%d, printf:%d\n", allf01, alll01);
+	printf("%s\n", allf01 != alll01 ? "!! NG !!" : "");
+
+	printf("\n");//                                                                         d         i     p      s       u    x
+	int flgf01 = ft_printf("[flg] ft_printf: %------++++d [END]\n", 123);
+	int flgl01 = printf(       "      printf   : %------++++d [END]\n", 123);
+	printf("ft:%d, printf:%d\n", flgf01, flgl01);
+	printf("%s\n", flgf01 != flgl01 ? "!! NG !!" : "");
+
+	// basic test result
+	cf01 == cl01 ? ok_basic++ : ng_basic++;
+	sf01 == sl01 ? ok_basic++ : ng_basic++;
+	pf01 == pl01 ? ok_basic++ : ng_basic++;
+	df01 == dl01 ? ok_basic++ : ng_basic++;
+	if01 == il01 ? ok_basic++ : ng_basic++;
+	uf01 == ul01 ? ok_basic++ : ng_basic++;
+	xf01 == xl01 ? ok_basic++ : ng_basic++;
+	xuf01 == xul01 ? ok_basic++ : ng_basic++;
+	percf01 == percl01 ? ok_basic++ : ng_basic++;
+	allf01 == alll01 ? ok_basic++ : ng_basic++;
+	flgf01 == flgl01 ? ok_basic++ : ng_basic++;
+	printf("\n");
+	printf("<< BASIC TEST RESULT >>\n");
+	printf("ok: %d, ng: %d\n", ok_basic, ng_basic);
+	printf("\n");
+
+/* ## FLAG ## */
 	printf("\n\n\n");
 	ft_printf("##### flg test #####\n");
 /* c */
 	ft_printf("[c]\n");
 	char c_chr1 = 'f';
 	//                                                                                                                                             1    2    3    4        5     6     7      8     9    10    11   12
-	ft_printf(" ft_printf: 1:[%c], 2:[%5c], 3:[%-5c], 4:[%*c], 5:[%.c], 6:[%c], 7:[%c], 8:[%.c], 9:[%5c], 10:[%-5c], 11:[%5c], 12:[%-5c]\n", 'a', 'b', 'c', 10, 'd', 'e', c_chr1, '\0', '\0', '\0', '\0', 'a', 'a');
-	printf(       " printf   : 1:[%c], 2:[%5c], 3:[%-5c], 4:[%*c], 5:[%.c], 6:[%c], 7:[%c], 8:[%.c], 9:[%5c], 10:[%-5c], 11:[%5c], 12:[%-5c]\n", 'a', 'b', 'c', 10, 'd', 'e', c_chr1, '\0', '\0', '\0', '\0', 'a', 'a');
+	int cf1 = ft_printf(" ft_printf: 1:[%c], 2:[%5c], 3:[%-5c], 4:[%*c], 5:[%.c], 6:[%c], 7:[%c], 8:[%.c], 9:[%5c], 10:[%-5c], 11:[%5c], 12:[%-5c]\n", 'a', 'b', 'c', 10, 'd', 'e', c_chr1, '\0', '\0', '\0', '\0', 'a', 'a');
+	int cl1 = printf(       " printf   : 1:[%c], 2:[%5c], 3:[%-5c], 4:[%*c], 5:[%.c], 6:[%c], 7:[%c], 8:[%.c], 9:[%5c], 10:[%-5c], 11:[%5c], 12:[%-5c]\n", 'a', 'b', 'c', 10, 'd', 'e', c_chr1, '\0', '\0', '\0', '\0', 'a', 'a');
+	printf("ft:%d, printf:%d\n", cf1, cl1);
+	printf("%s\n", cf1 != cl1 ? "!! NG !!" : "");
 	printf("\n");
-	ft_printf(" ft_printf: 11:[%c], 12:[%c], 13:[%c], 14:[%c], 15:[%c]\n", 0, -0, 1, 300, 65);
-	printf(       " printf   : 11:[%c], 12:[%c], 13:[%c], 14:[%c], 15:[%c]\n", 0, -0, 1, 300, 65);
+
+	int cf2 = ft_printf(" ft_printf: 11:[%c], 12:[%c], 13:[%c], 14:[%c], 15:[%c]\n", 0, -0, 1, 300, 65);
+	int cl2 = printf(       " printf   : 11:[%c], 12:[%c], 13:[%c], 14:[%c], 15:[%c]\n", 0, -0, 1, 300, 65);
+	printf("ft:%d, printf:%d\n", cf2, cl2);
+	printf("%s\n", cf2 != cl2 ? "!! NG !!" : "");
 
 	printf("\n");
-	ft_printf(" ft_printf: 21:[%5c], 22:[%-2c], 23:[%-3c]\n", '0', '1', '2');
-	printf(       " printf   : 21:[%5c], 22:[%-2c], 23:[%-3c]\n", '0', '1', '2');
+	int cf3 = ft_printf(" ft_printf: 21:[%5c], 22:[%-2c], 23:[%-3c]\n", '0', '1', '2');
+	int cl3 = printf(       " printf   : 21:[%5c], 22:[%-2c], 23:[%-3c]\n", '0', '1', '2');
+	printf("ft:%d, printf:%d\n", cf3, cl3);
+	printf("%s\n", cf3 != cl3 ? "!! NG !!" : "");
 
 	printf("\n\n");
 
@@ -88,49 +149,83 @@ int main() {
 	char *s_str1 = "hoge";
 	char *s_str2 = NULL;
 	//                                                                                                                                             1       2     3          4      5      6            7        8        9      10    11
-	ft_printf(" ft_printf: 1:[%s], 2:[%5s], 3:[%*s], 4:[%-10s], 5:[%10s], 6:[%.10s], 7:[%s], 8:[%s], 9:[%-2s], 10:[%10.5s], 11:[%10.s]\n", "abc", "def", 5, "ghi", "123%", "456", s_str1, (char *)NULL, s_str2, "ABC", "12345", "12345");
-	printf(       " printf   : 1:[%s], 2:[%5s], 3:[%*s], 4:[%-10s], 5:[%10s], 6:[%.10s], 7:[%s], 8:[%s], 9:[%-2s], 10:[%10.5s], 11:[%10.s]\n", "abc", "def", 5, "ghi", "123%", "456", s_str1, (char *)NULL, s_str2, "ABC", "12345", "12345");
+	int sf1 = ft_printf(" ft_printf: 1:[%s], 2:[%5s], 3:[%*s], 4:[%-10s], 5:[%10s], 6:[%.10s], 7:[%s], 8:[%s], 9:[%-2s], 10:[%10.5s], 11:[%10.s]\n", "abc", "def", 5, "ghi", "123%", "456", s_str1, (char *)NULL, s_str2, "ABC", "12345", "12345");
+	int sl1 = printf(       " printf   : 1:[%s], 2:[%5s], 3:[%*s], 4:[%-10s], 5:[%10s], 6:[%.10s], 7:[%s], 8:[%s], 9:[%-2s], 10:[%10.5s], 11:[%10.s]\n", "abc", "def", 5, "ghi", "123%", "456", s_str1, (char *)NULL, s_str2, "ABC", "12345", "12345");
+	printf("ft:%d, printf:%d\n", sf1, sl1);
+	printf("%s\n", sf1 != sl1 ? "!! NG !!" : "");
 	printf("\n");
-	ft_printf(" ft_printf: 11:[%-10.s], 12:[%-10.0s], 13:[%-10.1s], 14:[%-10.2s], 15:[%-10.3s], 16:[%-10.4s], 17:[%-10.5s], 18:[%-10.6s], 19:[%-10.7s], 20:[%-10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
-	printf(       " printf   : 11:[%-10.s], 12:[%-10.0s], 13:[%-10.1s], 14:[%-10.2s], 15:[%-10.3s], 16:[%-10.4s], 17:[%-10.5s], 18:[%-10.6s], 19:[%-10.7s], 20:[%-10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
+
+	int sf2 = ft_printf(" ft_printf: 11:[%-10.s], 12:[%-10.0s], 13:[%-10.1s], 14:[%-10.2s], 15:[%-10.3s], 16:[%-10.4s], 17:[%-10.5s], 18:[%-10.6s], 19:[%-10.7s], 20:[%-10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
+	int sl2 = printf(       " printf   : 11:[%-10.s], 12:[%-10.0s], 13:[%-10.1s], 14:[%-10.2s], 15:[%-10.3s], 16:[%-10.4s], 17:[%-10.5s], 18:[%-10.6s], 19:[%-10.7s], 20:[%-10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
+	printf("ft:%d, printf:%d\n", sf2, sl2);
+	printf("%s\n", sf2 != sl2 ? "!! NG !!" : "");
+
 	printf("\n");
-	ft_printf(" ft_printf: 21:[%10.s], 22:[%10.0s], 23:[%10.1s], 24:[%10.2s], 25:[%10.3s], 26:[%10.4s], 27:[%10.5s], 28:[%10.6s], 29:[%10.7s], 30:[%10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
-	printf(       " printf   : 21:[%10.s], 22:[%10.0s], 23:[%10.1s], 24:[%10.2s], 25:[%10.3s], 26:[%10.4s], 27:[%10.5s], 28:[%10.6s], 29:[%10.7s], 30:[%10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
+
+	int sf3 = ft_printf(" ft_printf: 21:[%10.s], 22:[%10.0s], 23:[%10.1s], 24:[%10.2s], 25:[%10.3s], 26:[%10.4s], 27:[%10.5s], 28:[%10.6s], 29:[%10.7s], 30:[%10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
+	int sl3 = printf(       " printf   : 21:[%10.s], 22:[%10.0s], 23:[%10.1s], 24:[%10.2s], 25:[%10.3s], 26:[%10.4s], 27:[%10.5s], 28:[%10.6s], 29:[%10.7s], 30:[%10.7s]\n", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", (char *)NULL);
+	printf("ft:%d, printf:%d\n", sf3, sl3);
+	printf("%s\n", sf3 != sl3 ? "!! NG !!" : "");
+
 	printf("\n");
-	ft_printf(" ft_printf: 31:[%10.s], 32:[%10.0s], 33:[%10.1s], 34:[%10.2s], 35:[%10.3s], 36:[%10.4s], 37:[%10.5s], 38:[%10.6s], 39:[%10.7s], 40:[%10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
-	printf(       " printf   : 31:[%10.s], 32:[%10.0s], 33:[%10.1s], 34:[%10.2s], 35:[%10.3s], 36:[%10.4s], 37:[%10.5s], 38:[%10.6s], 39:[%10.7s], 40:[%10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
+
+	int sf4 = ft_printf(" ft_printf: 31:[%10.s], 32:[%10.0s], 33:[%10.1s], 34:[%10.2s], 35:[%10.3s], 36:[%10.4s], 37:[%10.5s], 38:[%10.6s], 39:[%10.7s], 40:[%10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
+	int sl4 = printf(       " printf   : 31:[%10.s], 32:[%10.0s], 33:[%10.1s], 34:[%10.2s], 35:[%10.3s], 36:[%10.4s], 37:[%10.5s], 38:[%10.6s], 39:[%10.7s], 40:[%10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
+	printf("ft:%d, printf:%d\n", sf4, sl4);
+	printf("%s\n", sf4 != sl4 ? "!! NG !!" : "");
+
 	printf("\n");
-	ft_printf(" ft_printf: 41:[%-10.s], 42:[%-10.0s], 43:[%-10.1s], 44:[%-10.2s], 45:[%-10.3s], 46:[%-10.4s], 47:[%-10.5s], 48:[%-10.6s], 49:[%-10.7s], 50:[%-10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
-	printf(       " printf   : 41:[%-10.s], 42:[%-10.0s], 43:[%-10.1s], 44:[%-10.2s], 45:[%-10.3s], 46:[%-10.4s], 47:[%-10.5s], 48:[%-10.6s], 49:[%-10.7s], 50:[%-10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
+
+	int sf5 = ft_printf(" ft_printf: 41:[%-10.s], 42:[%-10.0s], 43:[%-10.1s], 44:[%-10.2s], 45:[%-10.3s], 46:[%-10.4s], 47:[%-10.5s], 48:[%-10.6s], 49:[%-10.7s], 50:[%-10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
+	int sl5 = printf(       " printf   : 41:[%-10.s], 42:[%-10.0s], 43:[%-10.1s], 44:[%-10.2s], 45:[%-10.3s], 46:[%-10.4s], 47:[%-10.5s], 48:[%-10.6s], 49:[%-10.7s], 50:[%-10.8s]\n", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de", "abc\0de");
+	printf("ft:%d, printf:%d\n", sf5, sl5);
+	printf("%s\n", sf5 != sl5 ? "!! NG !!" : "");
+
 	printf("\n");
 	//                                                     1              2
-	ft_printf(" ft_printf: 51:[%-*.*s], 52:[%.*s]\n", -7, -3, "yolo", -3, "hello");
-	printf(       " printf   : 51:[%-*.*s], 52:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	int sf6 = ft_printf(" ft_printf: 51:[%-*.*s], 52:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	int sl6 = printf(       " printf   : 51:[%-*.*s], 52:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	printf("ft:%d, printf:%d\n", sf6, sl6);
+	printf("%s\n", sf6 != sl6 ? "!! NG !!" : "");
+
 	printf("\n");
 	//                                                    1                2
-	ft_printf(" ft_printf: 61:[%*.*s], 62:[%.*s]\n", -7, -3, "yolo", -3, "hello");
-	printf(       " printf   : 61:[%*.*s], 62:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	int sf7 = ft_printf(" ft_printf: 61:[%*.*s], 62:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	int sl7 = printf(       " printf   : 61:[%*.*s], 62:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	printf("ft:%d, printf:%d\n", sf7, sl7);
+	printf("%s\n", sf7 != sl7 ? "!! NG !!" : "");
+
 	printf("\n");
 
-	ft_printf(" ft_printf: 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
-	printf(       " printf   : 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
+	int sf8 = ft_printf(" ft_printf: 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
+	int sl8 = printf(       " printf   : 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
+	printf("ft:%d, printf:%d\n", sf8, sl8);
+	printf("%s\n", sf8 != sl8 ? "!! NG !!" : "");
+
 	printf("\n");
 
-	ft_printf(" ft_printf: 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
-	printf(       " printf   : 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
+	int sf9 = ft_printf(" ft_printf: 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
+	int sl9 = printf(       " printf   : 63:[%*.*s], 64:[%.*s]\n", -7, UINT_MAX - 2, "yolo", UINT_MAX - 2, "hello");
+	printf("ft:%d, printf:%d\n", sf9, sl9);
+	printf("%s\n", sf9 != sl9 ? "!! NG !!" : "");
+
 	printf("\n");
 
 
 	//                                                    1                2
-	ft_printf(" ft_printf: 71:[%*.*s], 72:[%.*s]\n", -7, 3, "yolo", 3, "hello");
-	printf(       " printf   : 71:[%*.*s], 72:[%.*s]\n", -7, 3, "yolo", 3, "hello");
+	int sf10 = ft_printf(" ft_printf: 71:[%*.*s], 72:[%.*s]\n", -7, 3, "yolo", 3, "hello");
+	int sl10 = printf(       " printf   : 71:[%*.*s], 72:[%.*s]\n", -7, 3, "yolo", 3, "hello");
+	printf("ft:%d, printf:%d\n", sf10, sl10);
 	printf("\n");
-	ft_printf(" ft_printf: 81:[%-7.3s], 82:[%-.3s], 81:[%-7.s], 82:[%-.s], 81:[%-7.0s], 82:[%-.0s]\n", "yolo", "hello", "yolo", "hello", "yolo", "hello");
-	printf(       " printf   : 81:[%-7.3s], 82:[%-.3s], 81:[%-7.s], 82:[%-.s], 81:[%-7.0s], 82:[%-.0s]\n", "yolo", "hello", "yolo", "hello", "yolo", "hello");
 
+	int sf11 = ft_printf(" ft_printf: 81:[%-7.3s], 82:[%-.3s], 81:[%-7.s], 82:[%-.s], 81:[%-7.0s], 82:[%-.0s]\n", "yolo", "hello", "yolo", "hello", "yolo", "hello");
+	int sl11 = printf(       " printf   : 81:[%-7.3s], 82:[%-.3s], 81:[%-7.s], 82:[%-.s], 81:[%-7.0s], 82:[%-.0s]\n", "yolo", "hello", "yolo", "hello", "yolo", "hello");
+	printf("ft:%d, printf:%d\n", sf11, sl11);
 	printf("\n");
-	ft_printf(" ft_printf: 81:[%10.8s]\n", "abcde");
-	printf(       " printf   : 81:[%10.8s]\n", "abcde");
+
+	int sf12 = ft_printf(" ft_printf: 81:[%10.8s]\n", "abcde");
+	int sl12 = printf(       " printf   : 81:[%10.8s]\n", "abcde");
+	printf("ft:%d, printf:%d\n", sf12, sl12);
 
 	//	ft_printf(" ft_printf: 41:[%2147483648s]\n", "abc");
 //	printf(       " printf   : 41:[%2147483648s]\n", "abc");
@@ -144,51 +239,80 @@ int main() {
 	char *p_p4 = "123";
 	char p_c1 = 'a';
 	char *p_p5 = &p_c1;
-	//                                                                                              1  2      3       4       5         6     7
-	ft_printf(" ft_printf: 1:[%p], 2:[%-5p], 3:[%*p], 4:[%15p], 5:[%*p], 6:[%p], 7:[%10p]\n", &p1, &p1, 0, &p1, &p_p2, 15, &p_p3, NULL, NULL);
-	printf(       " printf   : 1:[%p], 2:[%-5p], 3:[%*p], 4:[%15p], 5:[%*p], 6:[%p], 7:[%10p]\n", &p1, &p1, 0, &p1, &p_p2, 15, &p_p3, NULL, NULL);
-	printf("\n");
-	ft_printf(" ft_printf: 11:[%-20p], 12:[%-20p], 13:[%-20p], 14:[%-20p], 15:[%-20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
-	printf(       " printf   : 11:[%-20p], 12:[%-20p], 13:[%-20p], 14:[%-20p], 15:[%-20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
-	printf("\n");
-	ft_printf(" ft_printf: 21:[%20p], 22:[%20p], 23:[%20p], 24:[%20p], 25:[%20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
-	printf(       " printf   : 21:[%20p], 22:[%20p], 23:[%20p], 24:[%20p], 25:[%20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
+	//                                                                                                       1  2      3       4       5         6     7
+	int pf1 = ft_printf(" ft_printf: 1:[%p], 2:[%-5p], 3:[%*p], 4:[%15p], 5:[%*p], 6:[%p], 7:[%10p]\n", &p1, &p1, 0, &p1, &p_p2, 15, &p_p3, NULL, NULL);
+	int pl1 = printf(       " printf   : 1:[%p], 2:[%-5p], 3:[%*p], 4:[%15p], 5:[%*p], 6:[%p], 7:[%10p]\n", &p1, &p1, 0, &p1, &p_p2, 15, &p_p3, NULL, NULL);
+	printf("ft:%d, printf:%d\n", pf1, pl1);
+	printf("%s\n", pf1 != pl1 ? "!! NG !!" : "");
 
 	printf("\n");
-	ft_printf(" ft_printf: 31:[%.p], 32:[%*p], 33:[%p], 34:[%20p], 35:[%20p]\n", &p_p1, 0, &p_p2, &p_p3, &p_p4, &p_p5);
-	printf(       " printf   : 31:[%.p], 32:[%*p], 33:[%p], 34:[%20p], 35:[%20p]\n", &p_p1, 0, &p_p2, &p_p3, &p_p4, &p_p5);
-	printf("\n");
-	//                                                                                                                            1        2          3                  4                   5                6                    7             8
-	ft_printf(" ft_printf: 41:[%2p], 42:[%-2p], 43:[%-11p], 44:[%-12p], 45:[%-9p], 46:[%-8p], 47:[%-13p], 48:[%-14p]\n", (void *)-1, (void *)-1, (void *)INT_MIN, (void *)INT_MAX, (void *)LONG_MAX, (void *)LONG_MIN, (void *)ULONG_MAX, (void *)-ULONG_MAX);
-	printf(       " printf   : 41:[%2p], 42:[%-2p], 43:[%-11p], 44:[%-12p], 45:[%-9p], 46:[%-8p], 47:[%-13p], 48:[%-14p]\n", (void *)-1, (void *)-1, (void *)INT_MIN, (void *)INT_MAX, (void *)LONG_MAX, (void *)LONG_MIN, (void *)ULONG_MAX, (void *)-ULONG_MAX);
 
+	int pf2 = ft_printf(" ft_printf: 11:[%-20p], 12:[%-20p], 13:[%-20p], 14:[%-20p], 15:[%-20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
+	int pl2 = printf(       " printf   : 11:[%-20p], 12:[%-20p], 13:[%-20p], 14:[%-20p], 15:[%-20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
+	printf("ft:%d, printf:%d\n", pf2, pl2);
+	printf("%s\n", pf2 != pl2 ? "!! NG !!" : "");
+
+	printf("\n");
+
+	int pf3 = ft_printf(" ft_printf: 21:[%20p], 22:[%20p], 23:[%20p], 24:[%20p], 25:[%20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
+	int pl3 = printf(       " printf   : 21:[%20p], 22:[%20p], 23:[%20p], 24:[%20p], 25:[%20p]\n", &p_p1, &p_p2, &p_p3, &p_p4, &p_p5, NULL);
+	printf("ft:%d, printf:%d\n", pf3, pl3);
+	printf("%s\n", pf3 != pl3 ? "!! NG !!" : "");
+
+	printf("\n");
+
+	int pf4 = ft_printf(" ft_printf: 31:[%.p], 32:[%*p], 33:[%p], 34:[%20p], 35:[%20p]\n", &p_p1, 0, &p_p2, &p_p3, &p_p4, &p_p5);
+	int pl4 = printf(       " printf   : 31:[%.p], 32:[%*p], 33:[%p], 34:[%20p], 35:[%20p]\n", &p_p1, 0, &p_p2, &p_p3, &p_p4, &p_p5);
+	printf("ft:%d, printf:%d\n", pf4, pl4);
+	printf("%s\n", pf4 != pl4 ? "!! NG !!" : "");
+
+	printf("\n");
+	//                                                                                                                                   1        2          3                  4                   5                6                    7             8
+	int pf5 = ft_printf(" ft_printf: 41:[%2p], 42:[%-2p], 43:[%-11p], 44:[%-12p], 45:[%-9p], 46:[%-8p], 47:[%-13p], 48:[%-14p]\n", (void *)-1, (void *)-1, (void *)INT_MIN, (void *)INT_MAX, (void *)LONG_MAX, (void *)LONG_MIN, (void *)ULONG_MAX, (void *)-ULONG_MAX);
+	int pl5 = printf(       " printf   : 41:[%2p], 42:[%-2p], 43:[%-11p], 44:[%-12p], 45:[%-9p], 46:[%-8p], 47:[%-13p], 48:[%-14p]\n", (void *)-1, (void *)-1, (void *)INT_MIN, (void *)INT_MAX, (void *)LONG_MAX, (void *)LONG_MIN, (void *)ULONG_MAX, (void *)-ULONG_MAX);
+
+	printf("ft:%d, printf:%d\n", pf5, pl5);
+	printf("%s\n", pf5 != pl5 ? "!! NG !!" : "");
 
 
 	printf("\n\n");
 
 /* d & i */
 	ft_printf("[d & i]\n");
-	ft_printf(" ft_printf: 1:[%d], 2:[%---d], 3:[% d], 4:[%+d], 5:[%010d], 6:[%10.5d], 7:[%.5d], 8:[%5.5d], 9:[% d], 10:[%d]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0, -123);
-	printf(       " printf   : 1:[%d], 2:[%---d], 3:[% d], 4:[%+d], 5:[%010d], 6:[%10.5d], 7:[%.5d], 8:[%5.5d], 9:[% d], 10:[%d]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0, -123);
-	printf("\n");
-	//                                                                                                                                                    11        12       13     14     15   16   17   18    19   20
-	ft_printf(" ft_printf: 11:[%d], 12:[%25d], 13:[%.25d], 14:[%25d], 15:[%010.1d], 16:[%10.d], 17:[%10.1d], 18:[%010.6d], 19:[%.6d], 20:[%06d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
-	printf(       " printf   : 11:[%d], 12:[%25d], 13:[%.25d], 14:[%25d], 15:[%010.1d], 16:[%10.d], 17:[%10.1d], 18:[%010.6d], 19:[%.6d], 20:[%06d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
+	int df1 = ft_printf(" ft_printf: 1:[%d], 2:[%---d], 3:[% d], 4:[%+d], 5:[%010d], 6:[%10.5d], 7:[%.5d], 8:[%5.5d], 9:[% d], 10:[%d], 11:[% d], 12:[%+d], 13:[% d], 14:[%+d], 15:[%+d], 16:[%-d]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0, -123, 123, 123, -123, -123, 0, 0);
+	int dl1 = printf(       " printf   : 1:[%d], 2:[%---d], 3:[% d], 4:[%+d], 5:[%010d], 6:[%10.5d], 7:[%.5d], 8:[%5.5d], 9:[% d], 10:[%d], 11:[% d], 12:[%+d], 13:[% d], 14:[%+d], 15:[%+d], 16:[%-d]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0, -123, 123, 123, -123, -123, 0, 0);
+	printf("ft:%d, printf:%d\n", df1, dl1);
+	printf("%s\n", df1 != dl1 ? "!! NG !!" : "");
 
 	printf("\n");
-	//                                                                                                                                                    11        12       13     14     15   16   17   18    19   20
-	ft_printf(" ft_printf: 21:[%-d], 22:[%-25d], 23:[%-.25d], 24:[%-25d], 25:[%-10.1d], 26:[%-10.d], 27:[%-10.1d], 28:[%-10.6d], 29:[%-.6d], 30:[%-6d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
-	printf(       " printf   : 21:[%-d], 22:[%-25d], 23:[%-.25d], 24:[%-25d], 25:[%-10.1d], 26:[%-10.d], 27:[%-10.1d], 28:[%-10.6d], 29:[%-.6d], 30:[%-6d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
-	printf("\n");
-	//                                                                                                                                        31      32      33     34 35 36 37 47
-	ft_printf(" ft_printf: 31:[%.*d], 32:[%0*d], 33:[%d], 34:[%5.0d], 35:[%.d], 36:[%.0d], 37:[%5.01d], 38:[%00*d], 39:[%d], 40:[%d]\n", -6, -3, -7, -54, 7 -54, 0, 0, 0, 0, -7, -54,  0,0);
-	printf(       " printf   : 31:[%.*d], 32:[%0*d], 33:[%d], 34:[%5.0d], 35:[%.d], 36:[%.0d], 37:[%5.01d], 38:[%00*d], 39:[%d], 40:[%d]\n", -6, -3, -7, -54, 7 -54, 0, 0, 0, 0, -7, -54,   0,0);
+	//                                                                                                                                                              11        12       13     14     15   16   17   18    19   20
+	int df2 = ft_printf(" ft_printf: 11:[%d], 12:[%25d], 13:[%.25d], 14:[%25d], 15:[%010.1d], 16:[%10.d], 17:[%10.1d], 18:[%010.6d], 19:[%.6d], 20:[%06d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
+	int dl2 = printf(       " printf   : 11:[%d], 12:[%25d], 13:[%.25d], 14:[%25d], 15:[%010.1d], 16:[%10.d], 17:[%10.1d], 18:[%010.6d], 19:[%.6d], 20:[%06d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
+	printf("ft:%d, printf:%d\n", df2, dl2);
+	printf("%s\n", df2 != dl2 ? "!! NG !!" : "");
 
 	printf("\n");
-	ft_printf(" ft_printf: 41:[%.01d], 42:[%.d]\n", 0, 0);
-	printf(       " printf   : 41:[%.01d], 42:[%.d]\n", 0, 0);
+	//                                                                                                                                                                     11        12       13     14     15   16   17   18    19   20
+	int df3 = ft_printf(" ft_printf: 21:[%-d], 22:[%-25d], 23:[%-.25d], 24:[%-25d], 25:[%-10.1d], 26:[%-10.d], 27:[%-10.1d], 28:[%-10.6d], 29:[%-.6d], 30:[%-6d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
+	int dl3 = printf(       " printf   : 21:[%-d], 22:[%-25d], 23:[%-.25d], 24:[%-25d], 25:[%-10.1d], 26:[%-10.d], 27:[%-10.1d], 28:[%-10.6d], 29:[%-.6d], 30:[%-6d]\n", 0X123, INT_MAX, INT_MIN, INT_MIN, 123, 123, 123, 123, -123, -123);
+	printf("ft:%d, printf:%d\n", df3, dl3);
+	printf("%s\n", df3 != dl3 ? "!! NG !!" : "");
 
-//	printf("\n");
+	printf("\n");
+	//                                                                                                                                                 31      32      33     34 35 36 37 47
+	int df4 = ft_printf(" ft_printf: 31:[%.*d], 32:[%0*d], 33:[%d], 34:[%5.0d], 35:[%.d], 36:[%.0d], 37:[%5.01d], 38:[%00*d], 39:[%d], 40:[%d]\n", -6, -3, -7, -54, 7 -54, 0, 0, 0, 0, -7, -54,  0,0);
+	int dl4 = printf(       " printf   : 31:[%.*d], 32:[%0*d], 33:[%d], 34:[%5.0d], 35:[%.d], 36:[%.0d], 37:[%5.01d], 38:[%00*d], 39:[%d], 40:[%d]\n", -6, -3, -7, -54, 7 -54, 0, 0, 0, 0, -7, -54,   0,0);
+	printf("ft:%d, printf:%d\n", df4, dl4);
+	printf("%s\n", df4 != dl4 ? "!! NG !!" : "");
+
+	printf("\n");
+
+	int df5 = ft_printf(" ft_printf: 41:[%.01d], 42:[%.d]\n", 0, 0);
+	int dl5 = printf(       " printf   : 41:[%.01d], 42:[%.d]\n", 0, 0);
+	printf("ft:%d, printf:%d\n", df5, dl5);
+	printf("%s\n", df5 != dl5 ? "!! NG !!" : "");
+
+	//	printf("\n");
 //	ft_printf(" ft_printf: 51:[%.01d], 52:[%.d], 53:[%30000000000000d], 54:[%.30000000000000d], 55:[%4294967284d], 56:[%.4294967284d]\n", 0, 0, 42, 42, 42, 42);
 //	printf(       " printf   : 51:[%.01d], 52:[%.d], 53:[%30000000000000d], 54:[%.30000000000000d], 55:[%4294967284d], 56:[%.4294967284d]\n", 0, 0, 42, 42, 42, 42);
 
@@ -196,34 +320,53 @@ int main() {
 
 /* u */
 	ft_printf("[u]\n");
-	//                                                                                                                          1    2    3   4       5    6       7     8    9    10
-	ft_printf(" ft_printf: 1:[%u], 2:[%-u], 3:[%5u], 4:[%05u], 5:[%*u], 6:[%.5u], 7:[%u], 8:[%u], 9:[%2u], 10:[%---u]\n", 123, 123, 123, 123, 5, 123, 123, UINT_MAX, -1, 123, 123);
-	printf(       " printf   : 1:[%u], 2:[%-u], 3:[%5u], 4:[%05u], 5:[%*u], 6:[%.5u], 7:[%u], 8:[%u], 9:[%2u], 10:[%---u]\n", 123, 123, 123, 123, 5, 123, 123, UINT_MAX, -1, 123, 123);
+	//                                                                                                                                   1    2    3   4       5    6       7     8    9    10
+	int uf1 = ft_printf(" ft_printf: 1:[%u], 2:[%-u], 3:[%5u], 4:[%05u], 5:[%*u], 6:[%.5u], 7:[%u], 8:[%u], 9:[%2u], 10:[%---u]\n", 123, 123, 123, 123, 5, 123, 123, UINT_MAX, -1, 123, 123);
+	int ul1 = printf(       " printf   : 1:[%u], 2:[%-u], 3:[%5u], 4:[%05u], 5:[%*u], 6:[%.5u], 7:[%u], 8:[%u], 9:[%2u], 10:[%---u]\n", 123, 123, 123, 123, 5, 123, 123, UINT_MAX, -1, 123, 123);
+	printf("ft:%d, printf:%d\n", uf1, ul1);
+	printf("%s\n", uf1 != ul1 ? "!! NG !!" : "");
+
 	printf("\n");
-	ft_printf(" ft_printf: 11:[%u], 12:[%.u], 13:[%05.u], 14:[%05u], 15:[%5.u], 16:[%10.5u], 17:[%-10.5u]\n", 0, 0, 0, 0, 0, 0, 0);
-	printf(       " printf   : 11:[%u], 12:[%.u], 13:[%05.u], 14:[%05u], 15:[%5.u], 16:[%10.5u], 17:[%-10.5u]\n", 0, 0, 0, 0, 0, 0, 0);
+
+	int uf2 = ft_printf(" ft_printf: 11:[%u], 12:[%.u], 13:[%05.u], 14:[%05u], 15:[%5.u], 16:[%10.5u], 17:[%-10.5u]\n", 0, 0, 0, 0, 0, 0, 0);
+	int ul2 = printf(       " printf   : 11:[%u], 12:[%.u], 13:[%05.u], 14:[%05u], 15:[%5.u], 16:[%10.5u], 17:[%-10.5u]\n", 0, 0, 0, 0, 0, 0, 0);
+	printf("ft:%d, printf:%d\n", uf2, ul2);
+	printf("%s\n", uf2 != ul2 ? "!! NG !!" : "");
+
 	printf("\n");
-	ft_printf(" ft_printf: 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u]\n", 123, 123, 123, 123, 123, 123, 123);
-	printf(       " printf   : 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u]\n", 123, 123, 123, 123, 123, 123, 123);
+
+	int uf3 = ft_printf(" ft_printf: 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u]\n", 123, 123, 123, 123, 123, 123, 123);
+	int ul3 = printf(       " printf   : 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u]\n", 123, 123, 123, 123, 123, 123, 123);
+	printf("ft:%d, printf:%d\n", uf3, ul3);
+	printf("%s\n", uf3 != ul3 ? "!! NG !!" : "");
+
 	printf("\n\n");
 
 /* x */
 	ft_printf("[x]\n");
-	//                                                                                                                                                                       1   2   3    4     5    6    7    8    9      10       11     12      13
-	ft_printf(" ft_printf: 1:[%x], 2:[%#x], 3:[%5x], 4:[%05x], 5:[%05.1x], 6:[%20.20x], 7:[%5.20x], 8:[%#5.20x], 9:[%x], 10:[#5x], 11:[%#6x], 12:[%#6.5x], 13:[%#x]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0x1234, 0x1234, 0x1234, 0X1234);
-	printf(       " printf   : 1:[%x], 2:[%#x], 3:[%5x], 4:[%05x], 5:[%05.1x], 6:[%20.20x], 7:[%5.20x], 8:[%#5.20x], 9:[%x], 10:[#5x], 11:[%#6x], 12:[%#6.5x], 13:[%#x]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0x1234, 0x1234, 0x1234, 0X1234);
+	//                                                                                                                                                                                  1   2   3    4     5    6    7    8    9      10       11     12      13
+	int xf1 = ft_printf(" ft_printf: 1:[%x], 2:[%#x], 3:[%5x], 4:[%05x], 5:[%05.1x], 6:[%20.20x], 7:[%5.20x], 8:[%#5.20x], 9:[%x], 10:[%#5x], 11:[%#6x], 12:[%#6.5x], 13:[%#x]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0x1234, 0x1234, 0x1234, 0X1234, 0x1234);
+	int xl1 = printf(       " printf   : 1:[%x], 2:[%#x], 3:[%5x], 4:[%05x], 5:[%05.1x], 6:[%20.20x], 7:[%5.20x], 8:[%#5.20x], 9:[%x], 10:[%#5x], 11:[%#6x], 12:[%#6.5x], 13:[%#x]\n", 123, 123, 123, 123, 123, 123, 123, 123, 0x1234, 0x1234, 0x1234, 0X1234, 0x1234);
+	printf("ft:%d, printf:%d\n", xf1, xl1);
+	printf("%s\n", xf1 != xl1 ? "!! NG !!" : "");
 
-	printf("\n");//                                                                                                                              1     2   3    4  5  6  7   8   9
-	ft_printf(" ft_printf: 11:[%-20x], 12:[%-8.5x], 13:[%08.5x], 14:[%.x], 15:[%5.0x], 16:[%5.x], 17:[%#5.x], 18:[%#-8.5x], 19:[%08.5x]\n", 123 , 123, 123, 0, 0, 0, 0, 123, 0);
-	printf(       " printf   : 11:[%-20x], 12:[%-8.5x], 13:[%08.5x], 14:[%.x], 15:[%5.0x], 16:[%5.x], 17:[%#5.x], 18:[%#-8.5x], 19:[%08.5x]\n", 123 , 123, 123, 0, 0, 0, 0, 123, 0);
+	printf("\n");//                                                                                                                                        1     2   3    4  5  6  7   8   9
+	int xf2 = ft_printf(" ft_printf: 11:[%-20x], 12:[%-8.5x], 13:[%08.5x], 14:[%.x], 15:[%5.0x], 16:[%5.x], 17:[%#5.x], 18:[%#-8.5x], 19:[%08.5x]\n", 123 , 123, 123, 0, 0, 0, 0, 123, 0);
+	int xl2 = printf(       " printf   : 11:[%-20x], 12:[%-8.5x], 13:[%08.5x], 14:[%.x], 15:[%5.0x], 16:[%5.x], 17:[%#5.x], 18:[%#-8.5x], 19:[%08.5x]\n", 123 , 123, 123, 0, 0, 0, 0, 123, 0);
+	printf("ft:%d, printf:%d\n", xf2, xl2);
+	printf("%s\n", xf2 != xl2 ? "!! NG !!" : "");
 
 	printf("\n");
-	ft_printf(" ft_printf: 21:[%-2.7x], 22:[%-3.3x], 23:[%-3x], 24:[%3x], 25:[%x]\n", 3267, 6983, 0, 0, 0);
-	printf(       " printf   : 21:[%-2.7x], 22:[%-3.3x], 23:[%-3x], 24:[%3x], 25:[%x]\n", 3267, 6983, 0, 0, 0);
+	int xf3 = ft_printf(" ft_printf: 21:[%-2.7x], 22:[%-3.3x], 23:[%-3x], 24:[%3x], 25:[%x]\n", 3267, 6983, 0, 0, 0);
+	int xl3 = printf(       " printf   : 21:[%-2.7x], 22:[%-3.3x], 23:[%-3x], 24:[%3x], 25:[%x]\n", 3267, 6983, 0, 0, 0);
+	printf("ft:%d, printf:%d\n", xf3, xl3);
+	printf("%s\n", xf3 != xl3 ? "!! NG !!" : "");
 
 	printf("\n");
-	ft_printf(" ft_printf: 31:[%#x], 32:[%.50x], 33:[%.100x]\n", 0, 42, 42);
-	printf(       " printf   : 31:[%#x], 32:[%.50x], 33:[%.100x]\n", 0, 42, 42);
+	int xf4 = ft_printf(" ft_printf: 31:[%#x], 32:[%.50x], 33:[%.100x]\n", 0, 42, 42);
+	int xl4 = printf(       " printf   : 31:[%#x], 32:[%.50x], 33:[%.100x]\n", 0, 42, 42);
+	printf("ft:%d, printf:%d\n", xf4, xl4);
+	printf("%s\n", xf4 != xl4 ? "!! NG !!" : "");
 
 	printf("\n\n");
 
@@ -235,15 +378,66 @@ int main() {
 
 /* % */
 	ft_printf("[%%]\n");
-	ft_printf(" ft_printf: 1:[%%], 2:[%0%], 3:[%5%], 4:[%05%], 5:[%-05%], 6:[%.5%], 7:[%.05%], 8:[%05.%], 9:[%05.10%], 10:[%05.010%], 11:[%5.010%], 12:[%5.10%], 13:[%+%], 14:[% %], 15:[%+ -05%], 16:[%+ 05%]\n");
-	printf(       " printf   : 1:[%%], 2:[%0%], 3:[%5%], 4:[%05%], 5:[%-05%], 6:[%.5%], 7:[%.05%], 8:[%05.%], 9:[%05.10%], 10:[%05.010%], 11:[%5.010%], 12:[%5.10%], 13:[%+%], 14:[% %], 15:[%+ -05%], 16:[%+ 05%]\n");
+	int perf1 = ft_printf(" ft_printf: 1:[%%], 2:[%0%], 3:[%5%], 4:[%05%], 5:[%-05%], 6:[%.5%], 7:[%.05%], 8:[%05.%], 9:[%05.10%], 10:[%05.010%], 11:[%5.010%], 12:[%5.10%], 13:[%+%], 14:[% %], 15:[%+ -05%], 16:[%+ 05%]\n");
+	int perl1 = printf(       " printf   : 1:[%%], 2:[%0%], 3:[%5%], 4:[%05%], 5:[%-05%], 6:[%.5%], 7:[%.05%], 8:[%05.%], 9:[%05.10%], 10:[%05.010%], 11:[%5.010%], 12:[%5.10%], 13:[%+%], 14:[% %], 15:[%+ -05%], 16:[%+ 05%]\n");
+	printf("ft:%d, printf:%d\n", perf1, perl1);
+	printf("%s\n", perf1 != perl1 ? "!! NG !!" : "");
+
 	printf("\n\n");
 
 /* other */
 	ft_printf("[other]\n");
 
-	ft_printf(" ft_printf: [•]\n");
-	printf(       " printf   : [•]\n");
+	int othf1 = ft_printf(" ft_printf: [•]\n");
+	int othl1 = printf(       " printf   : [•]\n");
+	printf("ft:%d, printf:%d\n", othf1, othl1);
+	printf("%s\n", othf1 != othl1 ? "!! NG !!" : "");
+
+
+	// bonus test result
+	cf1 == cl1 ? ok_bonus++ : ng_bonus++;
+	cf2 == cl2 ? ok_bonus++ : ng_bonus++;
+	cf3 == cl3 ? ok_bonus++ : ng_bonus++;
+
+	sf1 == sl1 ? ok_bonus++ : ng_bonus++;
+	sf2 == sl2 ? ok_bonus++ : ng_bonus++;
+	sf3 == sl3 ? ok_bonus++ : ng_bonus++;
+	sf4 == sl4 ? ok_bonus++ : ng_bonus++;
+	sf5 == sl5 ? ok_bonus++ : ng_bonus++;
+	sf6 == sl6 ? ok_bonus++ : ng_bonus++;
+	sf7 == sl7 ? ok_bonus++ : ng_bonus++;
+	sf8 == sl8 ? ok_bonus++ : ng_bonus++;
+	sf9 == sl9 ? ok_bonus++ : ng_bonus++;
+
+	pf1 == pl1 ? ok_bonus++ : ng_bonus++;
+	pf2 == pl2 ? ok_bonus++ : ng_bonus++;
+	pf3 == pl3 ? ok_bonus++ : ng_bonus++;
+	pf4 == pl4 ? ok_bonus++ : ng_bonus++;
+	pf5 == pl5 ? ok_bonus++ : ng_bonus++;
+
+	df1 == dl1 ? ok_bonus++ : ng_bonus++;
+	df2 == dl2 ? ok_bonus++ : ng_bonus++;
+	df3 == dl3 ? ok_bonus++ : ng_bonus++;
+	df4 == dl4 ? ok_bonus++ : ng_bonus++;
+	df5 == dl5 ? ok_bonus++ : ng_bonus++;
+
+	uf1 == ul1 ? ok_bonus++ : ng_bonus++;
+	uf2 == ul2 ? ok_bonus++ : ng_bonus++;
+	uf3 == ul3 ? ok_bonus++ : ng_bonus++;
+
+	xf1 == xl1 ? ok_bonus++ : ng_bonus++;
+	xf2 == xl2 ? ok_bonus++ : ng_bonus++;
+	xf3 == xl3 ? ok_bonus++ : ng_bonus++;
+	xf4 == xl4 ? ok_bonus++ : ng_bonus++;
+
+	perf1 == perl1 ? ok_bonus++ : ng_bonus++;
+
+	othf1 == othl1 ? ok_bonus++ : ng_bonus++;
+
+	printf("\n");
+	printf("<< BONUS TEST RESULT >>\n");
+	printf("ok: %d, ng: %d\n", ok_bonus, ng_bonus);
+	printf("\n");
 
 
 

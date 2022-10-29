@@ -76,7 +76,7 @@ int	print_unsigned(unsigned long u, t_printf_info info)
 	if (!numstr)
 		return (-1);
 	ret_bytes = 0;
-	if (u == 0 && info.head_chr && !info.is_pointer)
+	if (info.base == 16 && !info.is_pointer && u == 0)
 		info.head_chr = "";
 	set_num_params(u, &info);
 	if (!info.left && info.padlen)
