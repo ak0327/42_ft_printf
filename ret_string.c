@@ -42,7 +42,7 @@ int	print_s(char *str, t_printf_info info)
 	if (!info.dot)
 		info.strlen = ft_strlen(str);
 	else
-		info.strlen = minsize(ft_strlen(str), info.perc);
+		info.strlen = minsize(ft_strlen(str), info.prec);
 	info.printsize = maxsize(info.width, info.strlen);
 	if (info.printsize > info.strlen)
 		info.padlen = info.printsize - info.strlen;

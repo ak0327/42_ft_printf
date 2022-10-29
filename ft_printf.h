@@ -30,8 +30,8 @@ typedef struct s_pritnf_info
 	bool	dot;
 	bool	dot_only;
 	bool	is_pointer;
-	int		width;
-	int		perc;
+	long	width;
+	long	prec;
 	int		base;
 	int		capitals;
 	char	*digits;
@@ -39,7 +39,7 @@ typedef struct s_pritnf_info
 	size_t	printsize;
 	size_t	strlen;
 	size_t	padlen;
-	size_t	perclen;
+	size_t	preclen;
 }					t_printf_info;
 
 int		ft_putchar_fd(char c, int fd);
@@ -50,7 +50,7 @@ int		print_c(char chr, t_printf_info info);
 int		print_s(char *str, t_printf_info info);
 int		print_percent(t_printf_info info);
 int		print_signed(long num, t_printf_info *info);
-int		print_hexadecimal(unsigned long u, t_printf_info *info, bool isupper);
+int		print_hex(unsigned long u, t_printf_info *info, bool isupper);
 int		print_unsigned(unsigned long u, t_printf_info info);
 
 size_t	ft_strlen(const char *s);
@@ -59,15 +59,15 @@ size_t	maxsize(size_t a, size_t b);
 
 char	*ft_strchr(const char *s, int c);
 
-void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	init_print_info(t_printf_info *info);
 void	input_flag(char *fmt, size_t *i, t_printf_info *info);
 
 bool	input_width(char *fmt, size_t *i, t_printf_info *info, va_list *ptr);
-bool	input_perc(char *fmt, size_t *i, t_printf_info *info, va_list *ptr);
+bool	input_prec(char *fmt, size_t *i, t_printf_info *info, va_list *ptr);
 bool	is_flag_valid(char c, t_printf_info *info);
 
 #endif

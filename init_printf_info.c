@@ -23,13 +23,13 @@ void	init_print_info(t_printf_info *info)
 	info->dot_only = false;
 	info->is_pointer = false;
 	info->width = 0;
-	info->perc = 0;
+	info->prec = 0;
 	info->base = 10;
 	info->capitals = 0;
 	info->printsize = 0;
 	info->strlen = 0;
 	info->padlen = 0;
-	info->perclen = 0;
+	info->preclen = 0;
 	info->digits = "0123456789abcdef0123456789ABCDEF";
 	info->head_chr = "";
 }

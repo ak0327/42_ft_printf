@@ -51,17 +51,17 @@ static void	set_num_params(unsigned long u, t_printf_info *info)
 		u /= info->base;
 		len += 1;
 	}
-	if ((size_t)info->perc > len)
+	if ((size_t)info->prec > len)
 	{
-		info->perclen = (size_t)info->perc - len;
-		len += info->perclen;
+		info->preclen = (size_t)info->prec - len;
+		len += info->preclen;
 	}
 	if ((size_t)info->width >= (len + ft_strlen(info->head_chr)))
 	{
 		if (info->head_chr)
 			len += ft_strlen(info->head_chr);
 		if (info->zero_pad)
-			info->perclen = (size_t)info->width - len;
+			info->preclen = (size_t)info->width - len;
 		else
 			info->padlen = (size_t)info->width - len;
 	}
@@ -84,8 +84,8 @@ int	print_unsigned(unsigned long u, t_printf_info info)
 			ret_bytes += ft_putchar_fd(' ', 1);
 	if (info.head_chr)
 		ret_bytes += ft_putstr_fd(info.head_chr, 1);
-	if (info.perclen)
-		while (info.perclen--)
+	if (info.preclen)
+		while (info.preclen--)
 			ret_bytes += ft_putchar_fd('0', 1);
 	if (!(info.dot_only && u == 0))
 		ret_bytes += ft_putstr_fd(numstr, 1);
@@ -116,7 +116,7 @@ int	print_signed(long n, t_printf_info *info)
 	return (print_unsigned(u, *info));
 }
 
-int	print_hexadecimal(unsigned long u, t_printf_info *info, bool isupper)
+int	print_hex(unsigned long u, t_printf_info *info, bool isupper)
 {
 	if (isupper)
 		info->capitals = 16;

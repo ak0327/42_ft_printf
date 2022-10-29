@@ -19,15 +19,15 @@ static int	pass_print_fmt(va_list *ptr, const char c, t_printf_info info)
 	if (c == 's')
 		return (print_s(va_arg(*ptr, char *), info));
 	if (c == 'p')
-		return (print_hexadecimal(va_arg(*ptr, unsigned long long), &info, false));
+		return (print_hex(va_arg(*ptr, unsigned long long), &info, false));
 	if (c == 'd' || c == 'i')
 		return (print_signed(va_arg(*ptr, long), &info));
 	if (c == 'u')
 		return (print_unsigned(va_arg(*ptr, unsigned int), info));
 	if (c == 'x')
-		return (print_hexadecimal(va_arg(*ptr, unsigned int), &info, false));
+		return (print_hex(va_arg(*ptr, unsigned int), &info, false));
 	if (c == 'X')
-		return (print_hexadecimal(va_arg(*ptr, unsigned int), &info, true));
+		return (print_hex(va_arg(*ptr, unsigned int), &info, true));
 	if (c == '%')
 		return (print_percent(info));
 	return (-1);
@@ -39,7 +39,7 @@ static int	print_fmt(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
 	input_flag((char *)fmt, i, info);
 	if (!input_width((char *)fmt, i, info, ptr))
 		return (-1);
-	if (!input_perc((char *)fmt, i, info, ptr))
+	if (!input_prec((char *)fmt, i, info, ptr))
 		return (-1);
 	if (!is_flag_valid(fmt[*i], info))
 		return (-1);

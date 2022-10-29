@@ -32,11 +32,15 @@ void	input_flag(char *fmt, size_t *i, t_printf_info *info)
 
 static void	set_width(int arg, t_printf_info *info)
 {
-	info->width = arg;
-	if (info->width < 0)
+	int	input;
+
+	input = arg;
+	if (input >= 0)
+		info->width = input;
+	else
 	{
+		info->width = -input;
 		info->left = true;
-		info->width = -info->width;
 		info->zero_pad = false;
 	}
 }
@@ -65,7 +69,18 @@ bool	input_width(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
 	return (true);
 }
 
-bool	input_perc(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
+static void	check_prec(t_printf_info *info)
+{
+	if (info->prec < 0)
+	{
+		info->dot = false;
+		info->prec = 0;
+	}
+	if (info->prec)
+		info->dot_only = false;
+}
+
+bool	input_prec(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
 {
 	if (fmt[*i] == '.')
 	{
@@ -74,18 +89,15 @@ bool	input_perc(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
 		*i += 1;
 		if (fmt[*i] == '*')
 		{
-			info->perc = va_arg(*ptr, int);
-			if (info->perc < 0)
-				info->perc = -1;
+			info->prec = va_arg(*ptr, int);
 			info->dot_only = false;
 			*i += 1;
 			if (ft_isdigit(fmt[*i]))
 				return (false);
 		}
 		while (ft_isdigit(fmt[*i]))
-			info->perc = info->perc * 10 + fmt[(*i)++] - '0';
-		if (info->perc)
-			info->dot_only = false;
+			info->prec = info->prec * 10 + fmt[(*i)++] - '0';
+		check_prec(info);
 		if (fmt[*i] == '*')
 			return (false);
 	}

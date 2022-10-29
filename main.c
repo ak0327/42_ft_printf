@@ -35,60 +35,67 @@ int main() {
 	ft_printf("%c", 'x');
 
 /* ## BASIC ## */
+/* c */
 	ft_putstr_fd("\n##### ft_printf vs printf #####\n", 1);//    1     2   3    4     5
 	int cf01 = ft_printf("[c] ft_printf: 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
 	int cl01 = printf(       "    printf   : 1:%c, 2:%c, 3:%c, 4:%c, 5:%c [END]\n", 'a', 'A', '1', ' ', '\0');
 	printf("ft:%d, printf:%d\n", cf01, cl01);
 	printf("%s\n", cf01 != cl01 ? "!! NG !!" : "");
 	printf("\n");//                                                       1      2     3      4     5     6
-
+/* s */
 	int sf01 = ft_printf("[s] ft_printf: 1:%s, 2:%s, 3:%s, 4:%s, 5:%s, 6:%s [END]\n", "aaa", "bb", "CCC", "4", "555", p5);
 	int sl01 = printf(       "    printf   : 1:%s, 2:%s, 3:%s, 4:%s, 5:%s, 6:%s [END]\n", "aaa", "bb", "CCC", "4", "555", p5);
 	printf("ft:%d, printf:%d\n", sf01, sl01);
 	printf("%s\n", sf01 != sl01 ? "!! NG !!" : "");
-	printf("\n");//                                                       1    2    3    4    5     6
-	int pf01 = ft_printf("[p] ft_printf: 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6);
-	int pl01 = printf(       "     printf  : 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6);
+	printf("\n");//                                                                           1    2    3    4    5     6
+/* p */
+	int pf01 = ft_printf("[p] ft_printf: 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p, 7:%p, 8:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6, (void *)42, (void *)19827492);
+	int pl01 = printf(       "     printf  : 1:%p, 2:%p, 3:%p, 4:%p, 5:%p, 6:%p, 7:%p, 8:%p [END]\n", &p1, &p2, &p3, &p4, &p5, &p6, (void *)42, (void *)19827492);
 	printf(       "     printflx: 1:  %lx, 2:  %lx, 3:  %lx, 4:  %lx, 5:  %lx, 6:  %lx [END]\n", (long)&p1, (long)&p2, (long)&p3, (long)&p4, (long)&p5, (long)&p6);
 	printf("ft:%d, printf:%d\n", pf01, pl01);
 	printf("%s\n", pf01 != pl01 ? "!! NG !!" : "");
-
 	printf("\n");//                                                       0    2    3   4   5          6
+/* d */
 	int df01 = ft_printf("[d] ft_printf: 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d, 7:%d, 8:%d, 9:%d [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
 	int dl01 = printf(       "    printf   : 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d, 7:%d, 8:%d, 9:%d [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
 	printf("ft:%d, printf:%d\n", df01, dl01);
 	printf("%s\n", df01 != dl01 ? "!! NG !!" : "");
-
 	printf("\n");//                                                       1    2    3   4   5          6
+/* i */
 	int if01 = ft_printf("[i] ft_printf: 1:%i, 2:%i, 3:%i, 4:%i, 5:%i, 6:%i, 7:%i, 8:%i, 9:%i [END]\n", 111, 222, -0, -2, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
 	int il01 = printf(       "    printf   : 1:%i, 2:%i, 3:%i, 4:%i, 5:%i, 6:%i, 7:%i, 8:%i, 9:%i [END]\n", 111, 222, -0, -2, INT_MAX, INT_MIN, 0b1010, 012, 0x7fffffff);
 	printf("ft:%d, printf:%d\n", if01, il01);
 	printf("%s\n", if01 != il01 ? "!! NG !!" : "");
 
-	printf("\n");//                                                       1    2    3   4   5          6
+/* u */
+	printf("\n");//                                                                        1    2    3   4   5          6
 	int uf01 = ft_printf("[u] ft_printf: 1:%u, 2:%u, 3:%u, 4:%u, 5:%u, 6:%u [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN);
 	int ul01 = printf(       "    printf   : 1:%u, 2:%u, 3:%u, 4:%u, 5:%u, 6:%u [END]\n", 111, 222, -0, -1, INT_MAX, INT_MIN);
 	printf("ft:%d, printf:%d\n", uf01, ul01);
 	printf("%s\n", uf01 != ul01 ? "!! NG !!" : "");
 
-	printf("\n");//                                                                         1  2  3   4    5      6      7    8         9
-	int xf01 = ft_printf("[x] ft_printf: 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
-	int xl01 = printf(       "    printf   : 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
+/* x */
+	printf("\n");//                                                                                             1  2  3   4    5      6      7    8         9
+	int xf01 = ft_printf("[x] ft_printf: 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x, 10:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN, 42);
+	int xl01 = printf(       "    printf   : 1:%x, 2:%x, 3:%x, 4:%x, 5:%x, 6:%x, 7:%x, 8:%x, 9:%x, 10:%x [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN, 42);
 	printf("ft:%d, printf:%d\n", xf01, xl01);
 	printf("%s\n", xf01 != xl01 ? "!! NG !!" : "");
 
-	printf("\n");//                                                                         1  2  3   4    5      6      7    8         9
+/* X */
+	printf("\n");//                                                                                           1  2  3   4    5      6      7    8         9
 	int xuf01 = ft_printf("[X] ft_printf: 1:%X, 2:%X, 3:%X, 4:%X, 5:%X, 6:%X, 7:%X, 8:%X, 9:%X [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
 	int xul01 = printf(       "    printf   : 1:%X, 2:%X, 3:%X, 4:%X, 5:%X, 6:%X, 7:%X, 8:%X, 9:%X [END]\n", -0, 1, 10, 100, 255, INT_MAX, -1, INT_MIN, (unsigned int)INT_MIN);
 	printf("ft:%d, printf:%d\n", xuf01, xul01);
 	printf("%s\n", xuf01 != xul01 ? "!! NG !!" : "");
 
+/* % */
 	printf("\n");
 	int percf01 = ft_printf("[%%] ft_printf: 1:%%, 2:%%, 3:%%%% [END]\n");
 	int percl01 = printf(       "    printf   : 1:%%, 2:%%, 3:%%%% [END]\n"); // 奇数はコンパイルエラー
 	printf("ft:%d, printf:%d\n", percf01, percl01);
 	printf("%s\n", percf01 != percl01 ? "!! NG !!" : "");
 
+/* all */
 	printf("\n");//                                                                         d         i     p      s       u    x
 	int allf01 = ft_printf("[all] ft_printf: abc[%d]efgh[%i]jklmno[%p]qr[%s]t[%u]vw[%x]yz%%%% [END]\n", INT_MAX, INT_MIN, &p1, "TEST%d", 111, 255);
 	int alll01 = printf(       "      printf   : abc[%d]efgh[%i]jklmno[%p]qr[%s]t[%u]vw[%x]yz%%%% [END]\n", INT_MAX, INT_MIN, &p1, "TEST%d", 111, 255);
@@ -115,7 +122,9 @@ int main() {
 	flgf01 == flgl01 ? ok_basic++ : ng_basic++;
 	printf("\n");
 	printf("<< BASIC TEST RESULT >>\n");
-	printf("ok: %d, ng: %d\n", ok_basic, ng_basic);
+	printf("   *****************\n");
+	printf("    ok: %d, ng: %d\n", ok_basic, ng_basic);
+	printf("   *****************\n");
 	printf("\n");
 
 /* ## FLAG ## */
@@ -124,7 +133,7 @@ int main() {
 /* c */
 	ft_printf("[c]\n");
 	char c_chr1 = 'f';
-	//                                                                                                                                             1    2    3    4        5     6     7      8     9    10    11   12
+	//                                                                                                                                                      1    2    3    4        5     6     7      8     9    10    11   12
 	int cf1 = ft_printf(" ft_printf: 1:[%c], 2:[%5c], 3:[%-5c], 4:[%*c], 5:[%.c], 6:[%c], 7:[%c], 8:[%.c], 9:[%5c], 10:[%-5c], 11:[%5c], 12:[%-5c]\n", 'a', 'b', 'c', 10, 'd', 'e', c_chr1, '\0', '\0', '\0', '\0', 'a', 'a');
 	int cl1 = printf(       " printf   : 1:[%c], 2:[%5c], 3:[%-5c], 4:[%*c], 5:[%.c], 6:[%c], 7:[%c], 8:[%.c], 9:[%5c], 10:[%-5c], 11:[%5c], 12:[%-5c]\n", 'a', 'b', 'c', 10, 'd', 'e', c_chr1, '\0', '\0', '\0', '\0', 'a', 'a');
 	printf("ft:%d, printf:%d\n", cf1, cl1);
@@ -141,6 +150,7 @@ int main() {
 	int cl3 = printf(       " printf   : 21:[%5c], 22:[%-2c], 23:[%-3c]\n", '0', '1', '2');
 	printf("ft:%d, printf:%d\n", cf3, cl3);
 	printf("%s\n", cf3 != cl3 ? "!! NG !!" : "");
+
 
 	printf("\n\n");
 
@@ -182,16 +192,16 @@ int main() {
 	printf("%s\n", sf5 != sl5 ? "!! NG !!" : "");
 
 	printf("\n");
-	//                                                     1              2
+	//                                                               1              2
 	int sf6 = ft_printf(" ft_printf: 51:[%-*.*s], 52:[%.*s]\n", -7, -3, "yolo", -3, "hello");
 	int sl6 = printf(       " printf   : 51:[%-*.*s], 52:[%.*s]\n", -7, -3, "yolo", -3, "hello");
 	printf("ft:%d, printf:%d\n", sf6, sl6);
 	printf("%s\n", sf6 != sl6 ? "!! NG !!" : "");
 
 	printf("\n");
-	//                                                    1                2
-	int sf7 = ft_printf(" ft_printf: 61:[%*.*s], 62:[%.*s]\n", -7, -3, "yolo", -3, "hello");
-	int sl7 = printf(       " printf   : 61:[%*.*s], 62:[%.*s]\n", -7, -3, "yolo", -3, "hello");
+	//                                                                                     1                2
+	int sf7 = ft_printf(" ft_printf: 61:[%*.*s], 62:[%.*s], 63:[%.20s], 64:[%.5s]\n", -7, -3, "yolo", -3, "hello", "hello world", "hello");
+	int sl7 = printf(       " printf   : 61:[%*.*s], 62:[%.*s], 63:[%.20s], 64:[%.5s]\n", -7, -3, "yolo", -3, "hello", "hello world", "hello");
 	printf("ft:%d, printf:%d\n", sf7, sl7);
 	printf("%s\n", sf7 != sl7 ? "!! NG !!" : "");
 
@@ -226,6 +236,10 @@ int main() {
 	int sf12 = ft_printf(" ft_printf: 81:[%10.8s]\n", "abcde");
 	int sl12 = printf(       " printf   : 81:[%10.8s]\n", "abcde");
 	printf("ft:%d, printf:%d\n", sf12, sl12);
+
+	ft_printf("%10.8s", "abcde");
+	printf("%10.8s", "abcde");
+
 
 	//	ft_printf(" ft_printf: 41:[%2147483648s]\n", "abc");
 //	printf(       " printf   : 41:[%2147483648s]\n", "abc");
@@ -314,8 +328,13 @@ int main() {
 
 	//	printf("\n");
 //	ft_printf(" ft_printf: 51:[%.01d], 52:[%.d], 53:[%30000000000000d], 54:[%.30000000000000d], 55:[%4294967284d], 56:[%.4294967284d]\n", 0, 0, 42, 42, 42, 42);
-//	printf(       " printf   : 51:[%.01d], 52:[%.d], 53:[%30000000000000d], 54:[%.30000000000000d], 55:[%4294967284d], 56:[%.4294967284d]\n", 0, 0, 42, 42, 42, 42);
-
+	ft_printf(" ft_printf: 51:[%.01d], 52:[%.d]\n", 0, 0);
+	ft_printf(" ft_printf: 53:[%30000000000000d], 54:[%.30000000000000d]\n", 42, 42);
+	ft_printf(" ft_printf: 55:[%4294967284d], 56:[%.4294967284d]\n", 42, 42);
+	printf("\n");
+	printf(       " printf   : 51:[%.01d], 52:[%.d]\n", 0, 0);
+	printf(       " printf   : 53:[%30000000000000d], 54:[%.30000000000000d]\n", 42, 42);
+	printf(       " printf   : 55:[%4294967284d], 56:[%.4294967284d]\n", 42, 42);
 	printf("\n\n");
 
 /* u */
@@ -335,8 +354,8 @@ int main() {
 
 	printf("\n");
 
-	int uf3 = ft_printf(" ft_printf: 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u]\n", 123, 123, 123, 123, 123, 123, 123);
-	int ul3 = printf(       " printf   : 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u]\n", 123, 123, 123, 123, 123, 123, 123);
+	int uf3 = ft_printf(" ft_printf: 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u], 28:[%.20u]\n", 123, 123, 123, 123, 123, 123, 123, 42);
+	int ul3 = printf(       " printf   : 21:[%u], 22:[%.u], 23:[%05.u], 24:[%05u], 25:[%5.u], 26:[%10.5u], 27:[%-10.5u], 28:[%.20u]\n", 123, 123, 123, 123, 123, 123, 123, 42);
 	printf("ft:%d, printf:%d\n", uf3, ul3);
 	printf("%s\n", uf3 != ul3 ? "!! NG !!" : "");
 
@@ -436,11 +455,252 @@ int main() {
 
 	printf("\n");
 	printf("<< BONUS TEST RESULT >>\n");
-	printf("ok: %d, ng: %d\n", ok_bonus, ng_bonus);
+	printf("   *****************\n");
+	printf("    ok: %d, ng: %d\n", ok_bonus, ng_bonus);
+	printf("   *****************\n");
+	printf("\n");
+
+	printf("\n");
+/* printf-tester-tokyo */
+	ft_printf("[printf-tester-tokyo]\n"); // 全て未定義動作？
+
+	printf("< 1 >\n");
+	int tesf1 = ft_printf(" ft_printf: [%30000000000000i]\n", 42);
+	int tesl1 = printf(       " printf   : [%30000000000000i]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf1, tesl1);
+	printf("\n");
+
+	printf("< 2 >\n");
+	int tesf2 = ft_printf(" ft_printf: [%.30000000000000i]\n", 42);
+	int tesl2 = printf(       " printf   : [%.30000000000000i]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf2, tesl2);
+	printf("\n");
+
+	printf("< 3 >\n");
+	int tesf3 = ft_printf(" ft_printf: [%4294967284i]\n", 42);
+	int tesl3 = printf(       " printf   : [%4294967284i]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf3, tesl3);
+	printf("\n");
+
+	printf("< 4 >\n");
+	int tesf4 = ft_printf(" ft_printf: [%.4294967284i]\n", 42);
+	int tesl4 = printf(       " printf   : [%.4294967284i]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf4, tesl4);
+	printf("\n");
+
+	printf("< 5 >\n");
+	int tesf5 = ft_printf(" ft_printf: [%4294967304i]\n", 42);
+	int tesl5 = printf(       " printf   : [%4294967304i]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf5, tesl5);
+	printf("\n");
+
+	printf("< 6 >\n");
+	int tesf6 = ft_printf(" ft_printf: [%.4294967304i]\n", 42);
+	int tesl6 = printf(       " printf   : [%.4294967304i]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf6, tesl6);
+	printf("\n");
+
+	printf("< 7 >\n");
+	int tesf7 = ft_printf(" ft_printf: [%30000000000000x]\n", 42);
+	int tesl7 = printf(       " printf   : [%30000000000000x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf7, tesl7);
+	printf("\n");
+
+	printf("< 8 >\n");
+	int tesf8 = ft_printf(" ft_printf: [%.30000000000000x]\n", 42);
+	int tesl8 = printf(       " printf   : [%.30000000000000x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf8, tesl8);
+	printf("\n");
+
+	printf("< 9 >\n");
+	int tesf9 = ft_printf(" ft_printf: [%4294967284x]\n", 42);
+	int tesl9 = printf(       " printf   : [%4294967284x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf9, tesl9);
+	printf("\n");
+
+	printf("< 10 >\n");
+	int tesf10 = ft_printf(" ft_printf: [%.4294967284x]\n", 42);
+	int tesl10 = printf(       " printf   : [%.4294967284x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf10, tesl10);
+	printf("\n");
+
+	printf("< 11 >\n");
+	int tesf11 = ft_printf(" ft_printf: [%4294967304x]\n", 42);
+	int tesl11 = printf(       " printf   : [%4294967304x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf11, tesl11);
+	printf("\n");
+
+	printf("< 12 >\n");
+	int tesf12 = ft_printf(" ft_printf: [%.4294967304x]\n", 42);
+	int tesl12 = printf(       " printf   : [%.4294967304x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf12, tesl12);
 	printf("\n");
 
 
+	printf("< 13 >\n");
+	int tesf13 = ft_printf(" ft_printf: [%#30000000000000x],\n", 42);
+	int tesl13 = printf(       " printf   : [%#30000000000000x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf13, tesl13);
+	printf("\n");
 
+	printf("< 14 >\n");
+	int tesf14 = ft_printf(" ft_printf: [%#.30000000000000x]\n", 42);
+	int tesl14 = printf(       " printf   : [%#.30000000000000x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf14, tesl14);
+	printf("\n");
+
+	printf("< 15 >\n");
+	int tesf15 = ft_printf(" ft_printf: [%#4294967284x]\n", 42);
+	int tesl15 = printf(       " printf   : [%#4294967284x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf15, tesl15);
+	printf("\n");
+
+	printf("< 16 >\n");
+	int tesf16 = ft_printf(" ft_printf: [%#.4294967284x]\n", 42);
+	int tesl16 = printf(       " printf   : [%#.4294967284x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf16, tesl16);
+	printf("\n");
+
+	printf("< 17 >\n");
+	int tesf17 = ft_printf(" ft_printf: [%#4294967304x]\n", 42);
+	int tesl17 = printf(       " printf   : [%#4294967304x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf17, tesl17);
+	printf("\n");
+
+	printf("< 18 >\n");
+	int tesf18 = ft_printf(" ft_printf: [%#.4294967304x]\n", 42);
+	int tesl18 = printf(       " printf   : [%#.4294967304x]\n", 42);
+	printf("ret>> ft:%d, printf:%d\n", tesf18, tesl18);
+	printf("\n");
+
+	printf("< 19 >\n");
+	int tesf19 = ft_printf(" ft_printf: [%30000000000000s]\n", "hello");
+	int tesl19 = printf(       " printf   : [%30000000000000s]\n", "hello");
+	printf("ret>> ft:%d, printf:%d\n", tesf19, tesl19);
+	printf("\n");
+
+	printf("< 20 >\n");
+	int tesf20 = ft_printf(" ft_printf: [%.30000000000000s]\n", "hello");
+	int tesl20 = printf(       " printf   : [%.30000000000000s]\n", "hello");
+	printf("ret>> ft:%d, printf:%d\n", tesf20, tesl20);
+	printf("\n");
+
+	printf("< 21 >\n");
+	int tesf21 = ft_printf(" ft_printf: [%4294967284s]\n", "hello");
+	int tesl21 = printf(       " printf   : [%4294967284s]\n", "hello");
+	printf("ret>> ft:%d, printf:%d\n", tesf21, tesl21);
+	printf("\n");
+
+	printf("< 22 >\n");
+	int tesf22 = ft_printf(" ft_printf: [%.4294967284s]\n", "hello");
+	int tesl22 = printf(       " printf   : [%.4294967284s]\n", "hello");
+	printf("ret>> ft:%d, printf:%d\n", tesf22, tesl22);
+	printf("\n");
+
+	printf("< 23 >\n");
+	int tesf23 = ft_printf(" ft_printf: [%4294967304s]\n", "hello");
+	int tesl23 = printf(       " printf   : [%4294967304s]\n", "hello");
+	printf("ret>> ft:%d, printf:%d\n", tesf23, tesl23);
+
+	printf("\n\n");
+
+
+/* pft_2019 */
+	ft_printf("[pft_2019]\n"); // Tests completed. 699/745 tests passed. -> warning -1返しているだけ
+
+//	printf("< 1 >\n");
+//	char *s_hidden = "hi low\0don't print me lol\0";
+//	int tpf1 = ft_printf(" ft_printf: [%00s]\n", s_hidden);
+//	int tpl1 = printf(       " printf   : [%00s]\n", s_hidden); // warning
+//	printf("ret>> ft:%d, printf:%d\n", tpf1, tpl1);
+//	printf("\n");
+//
+//	printf("< 198 >\n");
+//	int tpf2 = ft_printf(" ft_printf: [%0-8.5i]\n", 34);
+//	int tpl2 = printf(       " printf   : [%0-8.5i]\n", 34); // warning
+//	printf("ret>> ft:%d, printf:%d\n", tpf2, tpl2);
+//	printf("\n");
+//
+//	printf("< 432 >\n");
+//	int tpf3 = ft_printf(" ft_printf: [%9.2p]\n", 1234);
+//	int tpl3 = printf(       " printf   : [%9.2p]\n", 1234); // warning
+//	printf("ret>> ft:%d, printf:%d\n", tpf3, tpl3);
+//	printf("\n");
+
+
+
+	printf("\n");
+
+/* pft */
+	ft_printf("[pft]\n"); // Tests completed. 645/694 tests passed.
+
+	printf("< 4189 >\n"); // timeout
+	int tf1 = ft_printf(" ft_printf: [%.*u]\n", -3, 12345);
+	int tl1 = printf(       " printf   : [%.*u]\n", -3, 12345);
+	printf("ret>> ft:%d, printf:%d\n", tf1, tl1);
+	printf("\n");
+
+	printf("< 4190 >\n"); // timeout
+	int tf2 = ft_printf(" ft_printf: [%.*u]\n", -1, 12345);
+	int tl2 = printf(       " printf   : [%.*u]\n", -1, 12345);
+	printf("ret>> ft:%d, printf:%d\n", tf2, tl2);
+	printf("\n");
+
+	printf("< 4191 >\n"); // timeout
+	int tf3 = ft_printf(" ft_printf: [%.*u]\n", -1, 0);
+	int tl3 = printf(       " printf   : [%.*u]\n", -1, 0);
+	printf("ret>> ft:%d, printf:%d\n", tf3, tl3);
+	printf("\n");
+
+	printf("< 4195 >\n"); // timeout
+	int tf4 = ft_printf(" ft_printf: [%.*x]\n", -3, 12345);
+	int tl4 = printf(       " printf   : [%.*x]\n", -3, 12345);
+	printf("ret>> ft:%d, printf:%d\n", tf4, tl4);
+	printf("\n");
+
+	printf("< 4196 >\n"); // timeout
+	int tf5 = ft_printf(" ft_printf: [%.*x]\n", -1, 12345);
+	int tl5 = printf(       " printf   : [%.*x]\n", -1, 12345);
+	printf("ret>> ft:%d, printf:%d\n", tf5, tl5);
+	printf("\n");
+
+	printf("< 4197 >\n"); // timeout
+	int tf6 = ft_printf(" ft_printf: [%.*x]\n", -1, 0);
+	int tl6 = printf(       " printf   : [%.*x]\n", -1, 0);
+	printf("ret>> ft:%d, printf:%d\n", tf6, tl6);
+	printf("\n");
+
+//	printf("< 4203 >\n");
+//	char *s_hello = "hello";
+//	int tf6 = ft_printf(" ft_printf: [%.*p]\n", -1, s_hello);
+//	int tl6 = printf(       " printf   : [%.*p]\n", -1, s_hello); // warning
+//	printf("ret>> ft:%d, printf:%d\n", tf6, tl6);
+//	printf("\n");
+
+
+
+
+
+
+
+//	int tesf1 = ft_printf(" ft_printf: [%30000000000000i], [%.30000000000000i], [%4294967284i], [%.4294967284i], [%4294967304i], [%.4294967304i], [], [], [], []\n", 42, 42, 42, 42, 42, 42);
+//	int tesl1 = printf(       " printf   : [%30000000000000i], [%.30000000000000i], [%4294967284i], [%.4294967284i], [%4294967304i], [%.4294967304i], [], [], [], []\n", 42, 42, 42, 42, 42, 42);
+//	printf(">> test1 ft:%d, printf:%d\n", tesf1, tesl1);
+//
+//	int tesf2 = ft_printf(" ft_printf: [%30000000000000x], [%.30000000000000x], [%4294967284x], [%.4294967284x], [%4294967304x], [%.4294967304x], [], [], [], []\n", 42, 42, 42, 42, 42, 42);
+//	int tesl2 = printf(       " printf   : [%30000000000000x], [%.30000000000000x], [%4294967284x], [%.4294967284x], [%4294967304x], [%.4294967304x], [], [], [], []\n", 42, 42, 42, 42, 42, 42);
+//	printf(">> test2 ft:%d, printf:%d\n", tesf2, tesl2);
+//
+//	int tesf3 = ft_printf(" ft_printf: [%#30000000000000x], [%#.30000000000000x], [%#4294967284x], [%#.4294967284x], [%#4294967304x], [%#.4294967304x], [], [], [], []\n", 42, 42, 42, 42, 42, 42);
+//	int tesl3 = printf(       " printf   : [%#30000000000000x], [%#.30000000000000x], [%#4294967284x], [%#.4294967284x], [%#4294967304x], [%#.4294967304x], [], [], [], []\n", 42, 42, 42, 42, 42, 42);
+//	printf(">> test3 ft:%d, printf:%d\n", tesf3, tesl3);
+//
+//	int tesf4 = ft_printf(" ft_printf: [%30000000000000s], [%.30000000000000s], [%4294967284s], [%.4294967284s], [%4294967304s], [], [], [], [], []\n", "hello", "hello", "hello", "hello", "hello");
+//	int tesl4 = printf(       " printf   : [%30000000000000s], [%.30000000000000s], [%4294967284s], [%.4294967284s], [%4294967304s], [], [], [], [], []\n", "hello", "hello", "hello", "hello", "hello");
+//	printf(">> test4 ft:%d, printf:%d\n", tesf4, tesl4);
+
+	printf("\n");
+	printf("\n");
 //	printf("\n");
 //	printf("printf test\n");
 //	printf(" 1   : %i, %d, %x\n", 1, 1, 1); // 1 1 1

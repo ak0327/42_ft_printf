@@ -16,6 +16,8 @@ static bool	is_valid_strs(t_printf_info info, char type)
 {
 	if (type == 'c')
 	{
+		if (info.width > INT_MAX || info.prec > INT_MAX)
+			return (false);
 		if (info.sign || info.space || info.zero_pad)
 			return (false);
 		if (info.dot && !info.dot_only)
@@ -24,6 +26,8 @@ static bool	is_valid_strs(t_printf_info info, char type)
 	}
 	if (type == 's')
 	{
+		if (info.width > INT_MAX || info.prec > INT_MAX)
+			return (false);
 		if (info.sign || info.space || info.zero_pad || info.prefix)
 			return (false);
 		return (true);
@@ -35,11 +39,8 @@ static bool	is_valid_num(t_printf_info *info, char type)
 {
 	if (type == 'd')
 	{
-		if (info->perc < 0)
-		{
-			info->dot = false;
-			info->perc = 0;
-		}
+		if (info->width > INT_MAX || info->prec > INT_MAX)
+			return (false);
 		if (info->zero_pad && info->dot)
 			info->zero_pad = false;
 		if ((info->sign && info->space) || info->prefix)
@@ -50,6 +51,8 @@ static bool	is_valid_num(t_printf_info *info, char type)
 	}
 	if (type == 'u')
 	{
+		if (info->width > INT_MAX || info->prec > INT_MAX)
+			return (false);
 		if (info->zero_pad && info->dot)
 			info->zero_pad = false;
 		if (info->sign || info->space || info->prefix)
@@ -64,6 +67,8 @@ static bool	is_valid_hex(t_printf_info *info, char type)
 	info->base = 16;
 	if (type == 'x')
 	{
+		if (info->width > INT_MAX || info->prec > INT_MAX)
+			return (false);
 		if (info->zero_pad && info->dot)
 			info->zero_pad = false;
 		if (info->sign || info->space)
@@ -72,6 +77,8 @@ static bool	is_valid_hex(t_printf_info *info, char type)
 	}
 	if (type == 'p')
 	{
+		if (info->width > INT_MAX || info->prec > INT_MAX)
+			return (false);
 		info->is_pointer = true;
 		if (info->sign || info->space || info->zero_pad || info->prefix)
 			return (false);
