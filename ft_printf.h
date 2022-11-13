@@ -47,12 +47,17 @@ int		ft_putchar_fd(char c, int fd);
 int		ft_putstr_fd(char *s, int fd);
 int		ft_isdigit(int c);
 int		ft_printf(const char *fmt, ...);
-int		print_c(char chr, t_printf_info info);
-int		print_s(char *str, t_printf_info info);
-int		print_percent(t_printf_info info);
-int		print_signed(long num, t_printf_info *info);
-int		print_hex(unsigned long u, t_printf_info *info, bool isupper);
-int		print_unsigned(unsigned long u, t_printf_info info);
+
+int		get_width(char *fmt, size_t *i, t_printf_info *info, va_list *p);
+int		get_prec(char *fmt, size_t *i, t_printf_info *info, va_list *p);
+int		valid_info4fmt(char c, t_printf_info *info);
+
+ssize_t	print_c(char chr, t_printf_info info);
+ssize_t	print_s(char *str, t_printf_info info);
+ssize_t	print_percent(t_printf_info info);
+ssize_t	print_signed(long num, t_printf_info *info);
+ssize_t	print_hex(unsigned long u, t_printf_info *info, bool isupper);
+ssize_t	print_unsigned(unsigned long u, t_printf_info info);
 
 size_t	ft_strlen(const char *s);
 size_t	minsize(size_t a, size_t b);
@@ -60,9 +65,5 @@ size_t	maxsize(size_t a, size_t b);
 
 char	*ft_strchr(const char *s, int c);
 void	get_flag(char *fmt, size_t *i, t_printf_info *info);
-
-int	get_width(char *fmt, size_t *i, t_printf_info *info, va_list *p);
-int	get_prec(char *fmt, size_t *i, t_printf_info *info, va_list *p);
-int	valid_info4fmt(char c, t_printf_info *info);
 
 #endif

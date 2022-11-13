@@ -67,10 +67,10 @@ static void	set_preclen_and_padlen(unsigned long u, t_printf_info *info)
 	}
 }
 
-int	print_unsigned(unsigned long u, t_printf_info info)
+ssize_t	print_unsigned(unsigned long u, t_printf_info info)
 {
 	char		*numstr;
-	int			ret_bytes;
+	ssize_t		ret_bytes;
 
 	numstr = convert_u2base(u, info.num_base, info.num_capitals);
 	if (!numstr)
@@ -94,7 +94,7 @@ int	print_unsigned(unsigned long u, t_printf_info info)
 	return (ret_bytes);
 }
 
-int	print_signed(long n, t_printf_info *info)
+ssize_t	print_signed(long n, t_printf_info *info)
 {
 	unsigned long long	u;
 
@@ -114,7 +114,7 @@ int	print_signed(long n, t_printf_info *info)
 	return (print_unsigned(u, *info));
 }
 
-int	print_hex(unsigned long u, t_printf_info *info, bool isupper)
+ssize_t	print_hex(unsigned long u, t_printf_info *info, bool isupper)
 {
 	info->num_base = 16;
 	if (isupper)

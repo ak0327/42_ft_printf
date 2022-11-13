@@ -12,9 +12,9 @@
 
 #include "ft_printf.h"
 
-int	print_c(char chr, t_printf_info info)
+ssize_t	print_c(char chr, t_printf_info info)
 {
-	int		ret_bytes;
+	ssize_t	ret_bytes;
 	size_t	printsize;
 
 	ret_bytes = 0;
@@ -33,9 +33,9 @@ int	print_c(char chr, t_printf_info info)
 	return (ret_bytes);
 }
 
-int	print_s(char *str, t_printf_info info)
+ssize_t	print_s(char *str, t_printf_info info)
 {
-	int		ret_bytes;
+	ssize_t	ret_bytes;
 	size_t	strlen;
 	size_t	printsize;
 	size_t	padlen;
@@ -62,9 +62,9 @@ int	print_s(char *str, t_printf_info info)
 	return (ret_bytes);
 }
 
-int	print_percent(t_printf_info info)
+ssize_t	print_percent(t_printf_info info)
 {
-	int		ret_bytes;
+	ssize_t	ret_bytes;
 	size_t	printsize;
 	size_t	padlen;
 

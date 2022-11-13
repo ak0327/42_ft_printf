@@ -14,12 +14,16 @@
 
 int	ft_putstr_fd(char *s, int fd)
 {
-	int		ret;
+	ssize_t	ret;
 
 	ret = 0;
 	if (s == NULL)
 		return (0);
 	while (*s)
+	{
 		ret += ft_putchar_fd(*s++, fd);
-	return (ret);
+		if (ret > INT_MAX)
+			return (-1);
+	}
+	return ((int)ret);
 }

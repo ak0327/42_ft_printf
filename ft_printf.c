@@ -31,7 +31,7 @@ static void	init_print_info(t_printf_info *info)
 	info->num_head_chr = "";
 }
 
-static int	pass_to_each_printfunc(const char c, t_printf_info info, va_list *p)
+static ssize_t	pass_to_printfunc(const char c, t_printf_info info, va_list *p)
 {
 	if (c == 'c')
 		return (print_c(va_arg(*p, int), info));
@@ -52,17 +52,17 @@ static int	pass_to_each_printfunc(const char c, t_printf_info info, va_list *p)
 	return (-1);
 }
 
-static int	print_fmt(char *fmt, size_t *i, t_printf_info *info, va_list *ptr)
+static ssize_t	print_fmt(char *fmt, size_t *i, t_printf_info *info, va_list *p)
 {
 	init_print_info(info);
 	get_flag((char *)fmt, i, info);
-	if (get_width((char *) fmt, i, info, ptr) == FAIL)
+	if (get_width((char *) fmt, i, info, p) == FAIL)
 		return (-1);
-	if (get_prec((char *) fmt, i, info, ptr) == FAIL)
+	if (get_prec((char *) fmt, i, info, p) == FAIL)
 		return (-1);
 	if (valid_info4fmt(fmt[*i], info) == FAIL)
 		return (-1);
-	return (pass_to_each_printfunc(fmt[*i], *info, ptr));
+	return (pass_to_printfunc(fmt[*i], *info, p));
 }
 
 int	ft_printf(const char *fmt, ...)
@@ -70,8 +70,8 @@ int	ft_printf(const char *fmt, ...)
 	size_t			i;
 	va_list			ptr;
 	t_printf_info	info;
-	int				print_bytes;
-	int				sum_print_bytes;
+	ssize_t			print_bytes;
+	ssize_t			sum_print_bytes;
 
 	va_start(ptr, fmt);
 	sum_print_bytes = 0;
@@ -85,11 +85,11 @@ int	ft_printf(const char *fmt, ...)
 		}
 		i++;
 		print_bytes = print_fmt((char *)fmt, &i, &info, &ptr);
-		if (print_bytes < 0)
-			return (-1);
 		sum_print_bytes += print_bytes;
+		if (print_bytes == -1 || sum_print_bytes > INT_MAX)
+			return (-1);
 		i++;
 	}
 	va_end(ptr);
-	return (sum_print_bytes);
+	return ((int)sum_print_bytes);
 }
