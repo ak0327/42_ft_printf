@@ -15,19 +15,20 @@
 int	print_c(char chr, t_printf_info info)
 {
 	int		ret_bytes;
+	size_t	printsize;
 
 	ret_bytes = 0;
-	info.printsize = maxsize(info.width, 1);
-	if (info.printsize == 1)
+	printsize = maxsize(info.width_size, 1);
+	if (printsize == 1)
 		return (ft_putchar_fd(chr, 1));
-	if (info.left)
+	if (info.flag_left)
 	{
 		ret_bytes += ft_putchar_fd(chr, 1);
-		info.printsize--;
+		printsize--;
 	}
-	while (info.printsize-- > !info.left)
+	while (printsize-- > !info.flag_left)
 		ret_bytes += ft_putchar_fd(' ', 1);
-	if (!info.left)
+	if (!info.flag_left)
 		ret_bytes += ft_putchar_fd(chr, 1);
 	return (ret_bytes);
 }
@@ -35,25 +36,28 @@ int	print_c(char chr, t_printf_info info)
 int	print_s(char *str, t_printf_info info)
 {
 	int		ret_bytes;
+	size_t	strlen;
+	size_t	printsize;
+	size_t	padlen;
 
 	ret_bytes = 0;
 	if (!str)
 		str = "(null)";
-	if (!info.dot)
-		info.strlen = ft_strlen(str);
-	else
-		info.strlen = minsize(ft_strlen(str), info.prec);
-	info.printsize = maxsize(info.width, info.strlen);
-	if (info.printsize > info.strlen)
-		info.padlen = info.printsize - info.strlen;
-	if (info.left)
-		while (info.strlen--)
+	strlen = ft_strlen(str);
+	if (info.prec_dot)
+		strlen = minsize(strlen, info.prec_size);
+	printsize = maxsize(strlen, info.width_size);
+	padlen = 0;
+	if (printsize > strlen)
+		padlen = printsize - strlen;
+	if (info.flag_left)
+		while (strlen--)
 			ret_bytes += ft_putchar_fd(*str++, 1);
-	if (info.padlen)
-		while (info.padlen--)
+	if (padlen)
+		while (padlen--)
 			ret_bytes += ft_putchar_fd(' ', 1);
-	if (!info.left)
-		while (info.strlen--)
+	if (!info.flag_left)
+		while (strlen--)
 			ret_bytes += ft_putchar_fd(*str++, 1);
 	return (ret_bytes);
 }
@@ -61,23 +65,25 @@ int	print_s(char *str, t_printf_info info)
 int	print_percent(t_printf_info info)
 {
 	int		ret_bytes;
+	size_t	printsize;
+	size_t	padlen;
 
 	ret_bytes = 0;
-	if ((info.left || !info.width) && info.zero_pad)
-		info.zero_pad = 0;
-	info.printsize = maxsize(info.width, 1);
-	if (info.printsize == 1)
+	if ((info.flag_left || !info.width_size) && info.flag_zero_pad)
+		info.flag_zero_pad = 0;
+	printsize = maxsize(info.width_size, 1);
+	if (printsize == 1)
 		return (ft_putchar_fd('%', 1));
-	info.padlen = info.printsize - 1;
-	if (info.left)
+	padlen = printsize - 1;
+	if (info.flag_left)
 		ret_bytes += ft_putchar_fd('%', 1);
-	if (info.zero_pad)
-		while (info.padlen--)
+	if (info.flag_zero_pad)
+		while (padlen--)
 			ret_bytes += ft_putchar_fd('0', 1);
 	else
-		while (info.padlen--)
+		while (padlen--)
 			ret_bytes += ft_putchar_fd(' ', 1);
-	if (!info.left)
+	if (!info.flag_left)
 		ret_bytes += ft_putchar_fd('%', 1);
 	return (ret_bytes);
 }

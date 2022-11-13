@@ -6,7 +6,7 @@
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:37:09 by takira            #+#    #+#             */
-/*   Updated: 2022/10/17 10:37:10 by takira           ###   ########.fr       */
+/*   Updated: 2022/11/13 15:35:06 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	ft_putstr_fd(char *s, int fd)
 {
-	size_t	len;
+	int		ret;
 
+	ret = 0;
 	if (s == NULL)
 		return (0);
-	len = ft_strlen(s);
-	return (write(fd, s, len));
+	while (*s)
+		ret += ft_putchar_fd(*s++, fd);
+	return (ret);
 }

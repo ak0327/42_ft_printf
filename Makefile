@@ -10,29 +10,29 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC			= gcc
+CC			= cc
 
 CFLAGS		= -Wall -Wextra -Werror
 
 NAME		= libftprintf.a
 
-SRCS		= ft_bzero.c ft_calloc.c ft_isdigit.c ft_memcpy.c ft_memset.c ft_putstr_fd.c ft_putchar_fd.c ft_strchr.c ft_strlen.c\
-			ft_printf.c conpare_size.c init_printf_info.c input_printf_format.c ret_decimal.c ret_string.c valid_flg.c
+SRCS		= ft_isdigit.c ft_putchar_fd.c ft_putstr_fd.c ft_strchr.c ft_strlen.c\
+			ft_printf.c compare_size.c input_printf_format.c print_num.c print_string.c vaild_info_for_each_fmt.c
 
 OBJS		= $(SRCS:.c=.o)
 
-$(NAME):	$(OBJS)
-			ar rcs $(NAME) $(OBJS)
-
 all:		$(NAME)
+
+$(NAME):	$(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
 bonus:		all
 
 clean:
-			rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean:		clean
-			rm -f $(NAME)
+	rm -f $(NAME)
 
 re:			fclean all
 

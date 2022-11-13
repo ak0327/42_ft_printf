@@ -19,31 +19,32 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <stdio.h>
+# include <stdlib.h>
+
+# define PASS 1
+# define FAIL 0
 
 typedef struct s_pritnf_info
 {
-	bool	left;
-	bool	sign;
-	bool	space;
-	bool	prefix;
-	bool	zero_pad;
-	bool	dot;
-	bool	dot_only;
-	bool	is_pointer;
-	long	width;
-	long	prec;
-	int		base;
-	int		capitals;
-	char	*digits;
-	char	*head_chr;
-	size_t	printsize;
-	size_t	strlen;
-	size_t	padlen;
-	size_t	preclen;
-}					t_printf_info;
+	bool		flag_left;
+	bool		flag_sign;
+	bool		flag_space;
+	bool		flag_prefix;
+	bool		flag_zero_pad;
+	bool		prec_dot;
+	bool		prec_dot_only;
+	bool		is_pointer;
+	long long	width_size;
+	long long	prec_size;
+	int			num_base;
+	int			num_capitals;
+	size_t		num_padlen;
+	size_t		num_preclen;
+	char		*num_head_chr;
+}				t_printf_info;
 
 int		ft_putchar_fd(char c, int fd);
-int		ft_putstr_fd(char *s, int fd); // change
+int		ft_putstr_fd(char *s, int fd);
 int		ft_isdigit(int c);
 int		ft_printf(const char *fmt, ...);
 int		print_c(char chr, t_printf_info info);
@@ -58,16 +59,10 @@ size_t	minsize(size_t a, size_t b);
 size_t	maxsize(size_t a, size_t b);
 
 char	*ft_strchr(const char *s, int c);
+void	get_flag(char *fmt, size_t *i, t_printf_info *info);
 
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t count, size_t size);
-void	*ft_memset(void *s, int c, size_t n);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-void	init_print_info(t_printf_info *info);
-void	input_flag(char *fmt, size_t *i, t_printf_info *info);
-
-bool	input_width(char *fmt, size_t *i, t_printf_info *info, va_list *ptr);
-bool	input_prec(char *fmt, size_t *i, t_printf_info *info, va_list *ptr);
-bool	is_flag_valid(char c, t_printf_info *info);
+int	get_width(char *fmt, size_t *i, t_printf_info *info, va_list *p);
+int	get_prec(char *fmt, size_t *i, t_printf_info *info, va_list *p);
+int	valid_info4fmt(char c, t_printf_info *info);
 
 #endif
