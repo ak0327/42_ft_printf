@@ -12,33 +12,33 @@
 
 #include "ft_printf.h"
 
-void	get_flag(char *fmt, size_t *i, t_printf_info *info)
+void	get_flag(char *fmt, t_printf_info *info)
 {
 	const char		*flags = "-+ #0";
 
-	while (fmt[*i] && ft_strchr(flags, fmt[*i]) != NULL)
+	while (fmt[info->fmt_idx] && ft_strchr(flags, fmt[info->fmt_idx]) != NULL)
 	{
-		if (fmt[*i] == '-')
+		if (fmt[info->fmt_idx] == '-')
 			info->flag_left = true;
-		if (fmt[*i] == '+')
+		if (fmt[info->fmt_idx] == '+')
 			info->flag_sign = true;
-		if (fmt[*i] == ' ')
+		if (fmt[info->fmt_idx] == ' ')
 			info->flag_space = true;
-		if (fmt[*i] == '#')
+		if (fmt[info->fmt_idx] == '#')
 			info->flag_prefix = true;
-		if (fmt[*i] == '0')
+		if (fmt[info->fmt_idx] == '0')
 			info->flag_zero_pad = true;
-		*i += 1;
+		info->fmt_idx++;
 	}
 }
 
-int	get_width(char *fmt, size_t *i, t_printf_info *info, va_list *p)
+int	get_width(char *fmt, t_printf_info *info, va_list *p)
 {
 	int	input_arg;
 
-	if (fmt[*i] == '*' || ft_isdigit(fmt[*i]))
+	if (fmt[info->fmt_idx] == '*' || ft_isdigit(fmt[info->fmt_idx]))
 	{
-		if (fmt[*i] == '*')
+		if (fmt[info->fmt_idx] == '*')
 		{
 			input_arg = va_arg(*p, int);
 			if (input_arg >= 0)
@@ -49,13 +49,13 @@ int	get_width(char *fmt, size_t *i, t_printf_info *info, va_list *p)
 				info->flag_left = true;
 				info->flag_zero_pad = false;
 			}
-			*i += 1;
-			if (info->flag_zero_pad && ft_isdigit(fmt[*i]))
+			info->fmt_idx++;
+			if (info->flag_zero_pad && ft_isdigit(fmt[info->fmt_idx]))
 				return (FAIL);
 		}
-		while (ft_isdigit(fmt[*i]))
-			info->width_size = info->width_size * 10 + fmt[(*i)++] - '0';
-		if (fmt[*i] == '*')
+		while (ft_isdigit(fmt[info->fmt_idx]))
+			info->width_size = info->width_size * 10 + fmt[info->fmt_idx++] - '0';
+		if (fmt[info->fmt_idx] == '*')
 			return (FAIL);
 	}
 	return (PASS);
@@ -72,25 +72,25 @@ static void	update_prec_params(t_printf_info *info)
 		info->prec_dot_only = false;
 }
 
-int	get_prec(char *fmt, size_t *i, t_printf_info *info, va_list *p)
+int	get_prec(char *fmt, t_printf_info *info, va_list *p)
 {
-	if (fmt[*i] == '.')
+	if (fmt[info->fmt_idx] == '.')
 	{
 		info->prec_dot = true;
 		info->prec_dot_only = true;
-		*i += 1;
-		if (fmt[*i] == '*')
+		info->fmt_idx += 1;
+		if (fmt[info->fmt_idx] == '*')
 		{
 			info->prec_size = va_arg(*p, int);
 			info->prec_dot_only = false;
-			*i += 1;
-			if (ft_isdigit(fmt[*i]))
+			info->fmt_idx += 1;
+			if (ft_isdigit(fmt[info->fmt_idx]))
 				return (FAIL);
 		}
-		while (ft_isdigit(fmt[*i]))
-			info->prec_size = info->prec_size * 10 + fmt[(*i)++] - '0';
+		while (ft_isdigit(fmt[info->fmt_idx]))
+			info->prec_size = info->prec_size * 10 + fmt[info->fmt_idx++] - '0';
 		update_prec_params(info);
-		if (fmt[*i] == '*')
+		if (fmt[info->fmt_idx] == '*')
 			return (FAIL);
 	}
 	return (PASS);
