@@ -76,7 +76,7 @@ int	ft_printf(const char *fmt, ...)
 	sum_print_bytes = 0;
 	info.fmt_idx = 0;
 	errno = 0;
-	while (fmt[info.fmt_idx] && errno == 0)
+	while (fmt && fmt[info.fmt_idx] && errno == 0)
 	{
 		if (fmt[info.fmt_idx] != '%')
 		{
