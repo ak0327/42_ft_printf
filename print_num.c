@@ -78,17 +78,17 @@ ssize_t	print_unsigned(unsigned long u, t_printf_info info)
 	ret_bytes = 0;
 	set_preclen_and_padlen(u, &info);
 	if (!info.flag_left && info.num_padlen)
-		while (info.num_padlen-- && errno != 0)
+		while (info.num_padlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf(' ', 1);
-	if (info.num_head_chr && errno != 0)
+	if (info.num_head_chr && errno == 0)
 		ret_bytes += ft_putstr_for_printf(info.num_head_chr, 1);
 	if (info.num_preclen)
-		while (info.num_preclen-- && errno != 0)
+		while (info.num_preclen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf('0', 1);
-	if (!(info.prec_dot_only && u == 0) && errno != 0)
+	if (!(info.prec_dot_only && u == 0) && errno == 0)
 		ret_bytes += ft_putstr_for_printf(num_str, 1);
-	if (info.flag_left && info.num_padlen && errno != 0)
-		while (info.num_padlen-- && errno != 0)
+	if (info.flag_left && info.num_padlen && errno == 0)
+		while (info.num_padlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf(' ', 1);
 	free(num_str);
 	return (ret_bytes);

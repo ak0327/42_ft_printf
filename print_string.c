@@ -21,14 +21,14 @@ ssize_t	print_c(char chr, t_printf_info info)
 	printsize = maxsize(info.width_size, 1);
 	if (printsize == 1)
 		return (ft_putchar_for_printf(chr, 1));
-	if (info.flag_left && errno != 0)
+	if (info.flag_left && errno == 0)
 	{
 		ret_bytes += ft_putchar_for_printf(chr, 1);
 		printsize--;
 	}
-	while (printsize-- > !info.flag_left && errno != 0)
+	while (printsize-- > !info.flag_left && errno == 0)
 		ret_bytes += ft_putchar_for_printf(' ', 1);
-	if (!info.flag_left && errno != 0)
+	if (!info.flag_left && errno == 0)
 		ret_bytes += ft_putchar_for_printf(chr, 1);
 	return (ret_bytes);
 }
@@ -51,13 +51,13 @@ ssize_t	print_s(char *str, t_printf_info info)
 	if (printsize > strlen)
 		padlen = printsize - strlen;
 	if (info.flag_left)
-		while (strlen-- && errno != 0)
+		while (strlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf(*str++, 1);
 	if (padlen)
-		while (padlen-- && errno != 0)
+		while (padlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf(' ', 1);
 	if (!info.flag_left)
-		while (strlen-- && errno != 0)
+		while (strlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf(*str++, 1);
 	return (ret_bytes);
 }
@@ -72,18 +72,18 @@ ssize_t	print_percent(t_printf_info info)
 	if ((info.flag_left || !info.width_size) && info.flag_zero_pad)
 		info.flag_zero_pad = 0;
 	printsize = maxsize(info.width_size, 1);
-	if (printsize == 1 && errno != 0)
+	if (printsize == 1 && errno == 0)
 		return (ft_putchar_for_printf('%', 1));
 	padlen = printsize - 1;
-	if (info.flag_left && errno != 0)
+	if (info.flag_left && errno == 0)
 		ret_bytes += ft_putchar_for_printf('%', 1);
 	if (info.flag_zero_pad)
-		while (padlen-- && errno != 0)
+		while (padlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf('0', 1);
 	else
-		while (padlen-- && errno != 0)
+		while (padlen-- && errno == 0)
 			ret_bytes += ft_putchar_for_printf(' ', 1);
-	if (!info.flag_left && errno != 0)
+	if (!info.flag_left && errno == 0)
 		ret_bytes += ft_putchar_for_printf('%', 1);
 	return (ret_bytes);
 }
