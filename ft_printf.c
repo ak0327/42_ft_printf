@@ -56,6 +56,8 @@ static ssize_t	print_fmt(char *fmt, t_printf_info *info, va_list *p)
 {
 	init_info_except_fmtidx(info);
 	get_flag((char *)fmt, info);
+	if (errno != 0)
+		return (-1);
 	if (get_width((char *) fmt, info, p) == FAIL)
 		return (-1);
 	if (get_prec((char *) fmt, info, p) == FAIL)
@@ -72,17 +74,18 @@ int	ft_printf(const char *fmt, ...)
 	ssize_t			print_bytes;
 	ssize_t			sum_print_bytes;
 
+	if (!fmt)
+		return (-1);
 	va_start(ptr, fmt);
 	sum_print_bytes = 0;
 	info.fmt_idx = 0;
 	errno = 0;
-	while (fmt && fmt[info.fmt_idx] && errno == 0)
+	while (fmt[info.fmt_idx] && errno == 0)
 	{
-		if (fmt[info.fmt_idx] != '%')
-		{
+		while (fmt[info.fmt_idx] != '%' && fmt[info.fmt_idx] && errno == 0)
 			sum_print_bytes += ft_putchar_for_printf(fmt[info.fmt_idx++], 1);
-			continue ;
-		}
+		if (!fmt[info.fmt_idx])
+			break ;
 		info.fmt_idx++;
 		print_bytes = print_fmt((char *)fmt, &info, &ptr);
 		sum_print_bytes += print_bytes;
