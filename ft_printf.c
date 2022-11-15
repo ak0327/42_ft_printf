@@ -22,8 +22,8 @@ static void	init_info_except_fmtidx(t_printf_info *info)
 	info->prec_dot = false;
 	info->prec_dot_only = false;
 	info->is_pointer = false;
-	info->w_size = 0;
-	info->p_size = 0;
+	info->width_siz = 0;
+	info->perc_siz = 0;
 	info->num_base = 10;
 	info->num_capitals = 0;
 	info->num_padlen = 0;

@@ -51,19 +51,19 @@ static void	set_preclen_and_padlen(unsigned long u, t_printf_info *info)
 		u /= info->num_base;
 		len += 1;
 	}
-	if ((size_t)info->p_size > len)
+	if ((size_t)info->perc_siz > len)
 	{
-		info->num_preclen = (size_t)info->p_size - len;
+		info->num_preclen = (size_t)info->perc_siz - len;
 		len += info->num_preclen;
 	}
-	if ((size_t)info->w_size >= (len + ft_strlen(info->num_head_chr)))
+	if ((size_t)info->width_siz >= (len + ft_strlen(info->num_head_chr)))
 	{
 		if (info->num_head_chr)
 			len += ft_strlen(info->num_head_chr);
 		if (info->flag_zero_pad)
-			info->num_preclen = (size_t)info->w_size - len;
+			info->num_preclen = (size_t)info->width_siz - len;
 		else
-			info->num_padlen = (size_t)info->w_size - len;
+			info->num_padlen = (size_t)info->width_siz - len;
 	}
 }
 

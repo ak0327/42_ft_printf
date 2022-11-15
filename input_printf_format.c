@@ -42,10 +42,10 @@ int	get_width(char *fmt, t_printf_info *info, va_list *p)
 		{
 			input_arg = va_arg(*p, int);
 			if (input_arg >= 0)
-				info->w_size = input_arg;
+				info->width_siz = input_arg;
 			else
 			{
-				info->w_size = -input_arg;
+				info->width_siz = -input_arg;
 				info->flag_left = true;
 				info->flag_zero_pad = false;
 			}
@@ -54,7 +54,7 @@ int	get_width(char *fmt, t_printf_info *info, va_list *p)
 				return (FAIL);
 		}
 		while (ft_isdigit(fmt[info->fmt_idx]))
-			info->w_size = info->w_size * 10 + fmt[info->fmt_idx++] - '0';
+			info->width_siz = info->width_siz * 10 + fmt[info->fmt_idx++] - '0';
 		if (fmt[info->fmt_idx] == '*')
 			return (FAIL);
 	}
@@ -63,12 +63,12 @@ int	get_width(char *fmt, t_printf_info *info, va_list *p)
 
 static void	update_prec_params(t_printf_info *info)
 {
-	if (info->p_size < 0)
+	if (info->perc_siz < 0)
 	{
 		info->prec_dot = false;
-		info->p_size = 0;
+		info->perc_siz = 0;
 	}
-	if (info->p_size)
+	if (info->perc_siz)
 		info->prec_dot_only = false;
 }
 
@@ -81,14 +81,14 @@ int	get_prec(char *fmt, t_printf_info *info, va_list *p)
 		info->fmt_idx += 1;
 		if (fmt[info->fmt_idx] == '*')
 		{
-			info->p_size = va_arg(*p, int);
+			info->perc_siz = va_arg(*p, int);
 			info->prec_dot_only = false;
 			info->fmt_idx += 1;
 			if (ft_isdigit(fmt[info->fmt_idx]))
 				return (FAIL);
 		}
 		while (ft_isdigit(fmt[info->fmt_idx]))
-			info->p_size = info->p_size * 10 + fmt[info->fmt_idx++] - '0';
+			info->perc_siz = info->perc_siz * 10 + fmt[info->fmt_idx++] - '0';
 		update_prec_params(info);
 		if (fmt[info->fmt_idx] == '*')
 			return (FAIL);

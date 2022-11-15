@@ -14,7 +14,7 @@
 
 static int	is_valid_strs(t_printf_info info, char type)
 {
-	if (info.w_size > INT_MAX || info.p_size > INT_MAX)
+	if (info.width_siz > INT_MAX || info.perc_siz > INT_MAX)
 		return (FAIL);
 	if (type == 'c')
 	{
@@ -36,7 +36,7 @@ static int	is_valid_strs(t_printf_info info, char type)
 
 static int	is_valid_num(t_printf_info *info, char type)
 {
-	if (info->w_size > INT_MAX || info->p_size > INT_MAX)
+	if (info->width_siz > INT_MAX || info->perc_siz > INT_MAX)
 		return (FAIL);
 	if (info->flag_zero_pad && info->prec_dot)
 		info->flag_zero_pad = false;
@@ -59,7 +59,7 @@ static int	is_valid_num(t_printf_info *info, char type)
 
 static int	is_valid_hex(t_printf_info *info, char type)
 {
-	if (info->w_size > INT_MAX || info->p_size > INT_MAX)
+	if (info->width_siz > INT_MAX || info->perc_siz > INT_MAX)
 		return (FAIL);
 	if (type == 'x')
 	{
