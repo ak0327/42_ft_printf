@@ -16,7 +16,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 NAME		= libftprintf.a
 
-SRCS		= ft_isdigit.c ft_putchar_fd.c ft_putstr_fd.c ft_strchr.c ft_strlen.c\
+SRCS		= ft_isdigit.c ft_put_for_printf.c ft_strchr.c ft_strlen.c\
 			ft_printf.c compare_size.c input_printf_format.c print_num.c print_string.c vaild_info_for_each_fmt.c
 
 OBJS		= $(SRCS:.c=.o)

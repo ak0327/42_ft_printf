@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void	init_print_info(t_printf_info *info)
+static void	init_info_except_fmtidx(t_printf_info *info)
 {
 	info->flag_left = false;
 	info->flag_sign = false;
@@ -52,22 +52,21 @@ static ssize_t	pass_to_printfunc(const char c, t_printf_info info, va_list *p)
 	return (-1);
 }
 
-static ssize_t	print_fmt(char *fmt, size_t *i, t_printf_info *info, va_list *p)
+static ssize_t	print_fmt(char *fmt, t_printf_info *info, va_list *p)
 {
-	init_print_info(info);
-	get_flag((char *)fmt, i, info);
-	if (get_width((char *) fmt, i, info, p) == FAIL)
+	init_info_except_fmtidx(info);
+	get_flag((char *)fmt, info);
+	if (get_width((char *) fmt, info, p) == FAIL)
 		return (-1);
-	if (get_prec((char *) fmt, i, info, p) == FAIL)
+	if (get_prec((char *) fmt, info, p) == FAIL)
 		return (-1);
-	if (valid_info4fmt(fmt[*i], info) == FAIL)
+	if (valid_info4fmt(fmt[info->fmt_idx], info) == FAIL)
 		return (-1);
-	return (pass_to_printfunc(fmt[*i], *info, p));
+	return (pass_to_printfunc(fmt[info->fmt_idx], *info, p));
 }
 
 int	ft_printf(const char *fmt, ...)
 {
-	size_t			i;
 	va_list			ptr;
 	t_printf_info	info;
 	ssize_t			print_bytes;
@@ -75,20 +74,21 @@ int	ft_printf(const char *fmt, ...)
 
 	va_start(ptr, fmt);
 	sum_print_bytes = 0;
-	i = 0;
-	while (fmt[i])
+	info.fmt_idx = 0;
+	errno = 0;
+	while (fmt[info.fmt_idx] && errno != 0)
 	{
-		if (fmt[i] != '%')
+		if (fmt[info.fmt_idx] != '%')
 		{
-			sum_print_bytes += ft_putchar_fd(fmt[i++], 1);
+			sum_print_bytes += ft_putchar_for_printf(fmt[info.fmt_idx++], 1);
 			continue ;
 		}
-		i++;
-		print_bytes = print_fmt((char *)fmt, &i, &info, &ptr);
+		info.fmt_idx++;
+		print_bytes = print_fmt((char *)fmt, &info, &ptr);
 		sum_print_bytes += print_bytes;
-		if (print_bytes == -1 || sum_print_bytes > INT_MAX)
+		if (errno != 0 || print_bytes == -1 || sum_print_bytes > INT_MAX)
 			return (-1);
-		i++;
+		info.fmt_idx++;
 	}
 	va_end(ptr);
 	return ((int)sum_print_bytes);

@@ -20,12 +20,14 @@
 # include <stdarg.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>
 
 # define PASS 1
 # define FAIL 0
 
 typedef struct s_pritnf_info
 {
+	size_t		fmt_idx;
 	bool		flag_left;
 	bool		flag_sign;
 	bool		flag_space;
@@ -43,15 +45,14 @@ typedef struct s_pritnf_info
 	char		*num_head_chr;
 }				t_printf_info;
 
-int		ft_putchar_fd(char c, int fd);
-int		ft_putstr_fd(char *s, int fd);
 int		ft_isdigit(int c);
 int		ft_printf(const char *fmt, ...);
-
-int		get_width(char *fmt, size_t *i, t_printf_info *info, va_list *p);
-int		get_prec(char *fmt, size_t *i, t_printf_info *info, va_list *p);
+int		get_width(char *fmt, t_printf_info *info, va_list *p);
+int		get_prec(char *fmt, t_printf_info *info, va_list *p);
 int		valid_info4fmt(char c, t_printf_info *info);
 
+ssize_t	ft_putchar_for_printf(char c, int fd);
+ssize_t	ft_putstr_for_printf(char *s, int fd);
 ssize_t	print_c(char chr, t_printf_info info);
 ssize_t	print_s(char *str, t_printf_info info);
 ssize_t	print_percent(t_printf_info info);
@@ -64,6 +65,6 @@ size_t	minsize(size_t a, size_t b);
 size_t	maxsize(size_t a, size_t b);
 
 char	*ft_strchr(const char *s, int c);
-void	get_flag(char *fmt, size_t *i, t_printf_info *info);
+void	get_flag(char *fmt, t_printf_info *info);
 
 #endif

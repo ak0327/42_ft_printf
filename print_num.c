@@ -15,8 +15,8 @@ static char	*convert_u2base(unsigned long u, int base, int capitals)
 {
 	size_t			len;
 	unsigned long	num;
-	char			*ret;
-	const char		*digits = "0123456789abcdef0123456789ABCDEF";
+	char			*ret_str;
+	const char		*hex_digit = "0123456789abcdef0123456789ABCDEF";
 
 	num = u;
 	len = 0;
@@ -27,16 +27,16 @@ static char	*convert_u2base(unsigned long u, int base, int capitals)
 		num /= base;
 		len += 1;
 	}
-	ret = (char *)malloc(sizeof(char) * (len + 1));
-	if (!ret)
+	ret_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ret_str)
 		return (NULL);
-	ret[len] = '\0';
+	ret_str[len] = '\0';
 	while (len--)
 	{
-		ret[len] = digits[u % base + capitals];
+		ret_str[len] = hex_digit[u % base + capitals];
 		u /= base;
 	}
-	return (ret);
+	return (ret_str);
 }
 
 static void	set_preclen_and_padlen(unsigned long u, t_printf_info *info)
@@ -69,28 +69,28 @@ static void	set_preclen_and_padlen(unsigned long u, t_printf_info *info)
 
 ssize_t	print_unsigned(unsigned long u, t_printf_info info)
 {
-	char		*numstr;
+	char		*num_str;
 	ssize_t		ret_bytes;
 
-	numstr = convert_u2base(u, info.num_base, info.num_capitals);
-	if (!numstr)
+	num_str = convert_u2base(u, info.num_base, info.num_capitals);
+	if (!num_str)
 		return (-1);
 	ret_bytes = 0;
 	set_preclen_and_padlen(u, &info);
 	if (!info.flag_left && info.num_padlen)
-		while (info.num_padlen--)
-			ret_bytes += ft_putchar_fd(' ', 1);
-	if (info.num_head_chr)
-		ret_bytes += ft_putstr_fd(info.num_head_chr, 1);
+		while (info.num_padlen-- && errno != 0)
+			ret_bytes += ft_putchar_for_printf(' ', 1);
+	if (info.num_head_chr && errno != 0)
+		ret_bytes += ft_putstr_for_printf(info.num_head_chr, 1);
 	if (info.num_preclen)
-		while (info.num_preclen--)
-			ret_bytes += ft_putchar_fd('0', 1);
-	if (!(info.prec_dot_only && u == 0))
-		ret_bytes += ft_putstr_fd(numstr, 1);
-	if (info.flag_left && info.num_padlen)
-		while (info.num_padlen--)
-			ret_bytes += ft_putchar_fd(' ', 1);
-	free(numstr);
+		while (info.num_preclen-- && errno != 0)
+			ret_bytes += ft_putchar_for_printf('0', 1);
+	if (!(info.prec_dot_only && u == 0) && errno != 0)
+		ret_bytes += ft_putstr_for_printf(num_str, 1);
+	if (info.flag_left && info.num_padlen && errno != 0)
+		while (info.num_padlen-- && errno != 0)
+			ret_bytes += ft_putchar_for_printf(' ', 1);
+	free(num_str);
 	return (ret_bytes);
 }
 
