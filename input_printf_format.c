@@ -6,7 +6,7 @@
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 22:06:48 by takira            #+#    #+#             */
-/*   Updated: 2022/11/13 15:36:58 by takira           ###   ########.fr       */
+/*   Updated: 2022/11/15 22:17:48 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	get_width(char *fmt, t_printf_info *info, va_list *p)
 		{
 			input_arg = va_arg(*p, int);
 			if (input_arg >= 0)
-				info->width_size = input_arg;
+				info->w_size = input_arg;
 			else
 			{
-				info->width_size = -input_arg;
+				info->w_size = -input_arg;
 				info->flag_left = true;
 				info->flag_zero_pad = false;
 			}
@@ -54,7 +54,7 @@ int	get_width(char *fmt, t_printf_info *info, va_list *p)
 				return (FAIL);
 		}
 		while (ft_isdigit(fmt[info->fmt_idx]))
-			info->width_size = info->width_size * 10 + fmt[info->fmt_idx++] - '0';
+			info->w_size = info->w_size * 10 + fmt[info->fmt_idx++] - '0';
 		if (fmt[info->fmt_idx] == '*')
 			return (FAIL);
 	}
@@ -63,12 +63,12 @@ int	get_width(char *fmt, t_printf_info *info, va_list *p)
 
 static void	update_prec_params(t_printf_info *info)
 {
-	if (info->prec_size < 0)
+	if (info->p_size < 0)
 	{
 		info->prec_dot = false;
-		info->prec_size = 0;
+		info->p_size = 0;
 	}
-	if (info->prec_size)
+	if (info->p_size)
 		info->prec_dot_only = false;
 }
 
@@ -81,14 +81,14 @@ int	get_prec(char *fmt, t_printf_info *info, va_list *p)
 		info->fmt_idx += 1;
 		if (fmt[info->fmt_idx] == '*')
 		{
-			info->prec_size = va_arg(*p, int);
+			info->p_size = va_arg(*p, int);
 			info->prec_dot_only = false;
 			info->fmt_idx += 1;
 			if (ft_isdigit(fmt[info->fmt_idx]))
 				return (FAIL);
 		}
 		while (ft_isdigit(fmt[info->fmt_idx]))
-			info->prec_size = info->prec_size * 10 + fmt[info->fmt_idx++] - '0';
+			info->p_size = info->p_size * 10 + fmt[info->fmt_idx++] - '0';
 		update_prec_params(info);
 		if (fmt[info->fmt_idx] == '*')
 			return (FAIL);

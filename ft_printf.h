@@ -36,8 +36,8 @@ typedef struct s_pritnf_info
 	bool		prec_dot;
 	bool		prec_dot_only;
 	bool		is_pointer;
-	long long	width_size;
-	long long	prec_size;
+	long long	w_size;
+	long long	p_size;
 	int			num_base;
 	int			num_capitals;
 	size_t		num_padlen;

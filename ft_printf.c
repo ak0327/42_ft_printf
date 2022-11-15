@@ -6,7 +6,7 @@
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:52:04 by takira            #+#    #+#             */
-/*   Updated: 2022/11/15 08:48:05 by takira           ###   ########.fr       */
+/*   Updated: 2022/11/15 22:18:00 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	init_info_except_fmtidx(t_printf_info *info)
 	info->prec_dot = false;
 	info->prec_dot_only = false;
 	info->is_pointer = false;
-	info->width_size = 0;
-	info->prec_size = 0;
+	info->w_size = 0;
+	info->p_size = 0;
 	info->num_base = 10;
 	info->num_capitals = 0;
 	info->num_padlen = 0;
