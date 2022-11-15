@@ -6,7 +6,7 @@
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:03:20 by takira            #+#    #+#             */
-/*   Updated: 2022/10/24 12:03:21 by takira           ###   ########.fr       */
+/*   Updated: 2022/11/15 09:33:22 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		valid_info4fmt(char c, t_printf_info *info);
 ssize_t	print_c(char chr, t_printf_info info);
 ssize_t	print_s(char *str, t_printf_info info);
 ssize_t	print_percent(t_printf_info info);
-ssize_t	print_signed(long num, t_printf_info *info);
+ssize_t	print_signed(int num, t_printf_info *info);
 ssize_t	print_hex(unsigned long u, t_printf_info *info, bool isupper);
 ssize_t	print_unsigned(unsigned long u, t_printf_info info);
 

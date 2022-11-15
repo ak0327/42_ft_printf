@@ -6,7 +6,7 @@
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:15:13 by takira            #+#    #+#             */
-/*   Updated: 2022/10/27 16:15:16 by takira           ###   ########.fr       */
+/*   Updated: 2022/11/15 09:46:11 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -94,9 +94,9 @@ ssize_t	print_unsigned(unsigned long u, t_printf_info info)
 	return (ret_bytes);
 }
 
-ssize_t	print_signed(long n, t_printf_info *info)
+ssize_t	print_signed(int n, t_printf_info *info)
 {
-	unsigned long long	u;
+	unsigned int	u;
 
 	if (n >= 0)
 	{

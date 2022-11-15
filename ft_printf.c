@@ -6,7 +6,7 @@
 /*   By: takira <takira@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:52:04 by takira            #+#    #+#             */
-/*   Updated: 2022/11/13 15:37:19 by takira           ###   ########.fr       */
+/*   Updated: 2022/11/15 08:48:05 by takira           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static ssize_t	pass_to_printfunc(const char c, t_printf_info info, va_list *p)
 	if (c == 'p')
 		return (print_hex(va_arg(*p, uintptr_t), &info, false));
 	if (c == 'd' || c == 'i')
-		return (print_signed(va_arg(*p, long), &info));
+		return (print_signed(va_arg(*p, int), &info));
 	if (c == 'u')
 		return (print_unsigned(va_arg(*p, unsigned int), info));
 	if (c == 'x')
