@@ -54,7 +54,7 @@ static ssize_t	pass_to_printfunc(const char c, t_printf_info info, va_list *p)
 
 static ssize_t	print_fmt(char *fmt, t_printf_info *info, va_list *p)
 {
-	init_info_for_fmt(info, NULL);
+	init_info_for_fmt(info);
 	get_flag((char *)fmt, info);
 	if (errno != 0)
 		return (-1);
