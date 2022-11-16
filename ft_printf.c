@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void	init_info_except_fmtidx(t_printf_info *info)
+static void	init_info_for_fmt(t_printf_info *info)
 {
 	info->flag_left = false;
 	info->flag_sign = false;
@@ -54,7 +54,7 @@ static ssize_t	pass_to_printfunc(const char c, t_printf_info info, va_list *p)
 
 static ssize_t	print_fmt(char *fmt, t_printf_info *info, va_list *p)
 {
-	init_info_except_fmtidx(info);
+	init_info_for_fmt(info, NULL);
 	get_flag((char *)fmt, info);
 	if (errno != 0)
 		return (-1);
@@ -67,6 +67,13 @@ static ssize_t	print_fmt(char *fmt, t_printf_info *info, va_list *p)
 	return (pass_to_printfunc(fmt[info->fmt_idx], *info, p));
 }
 
+static void	init_printf_param(size_t *fmt_idx, ssize_t *bytes)
+{
+	*bytes = 0;
+	*fmt_idx = 0;
+	errno = 0;
+}
+
 int	ft_printf(const char *fmt, ...)
 {
 	va_list			ptr;
@@ -77,9 +84,7 @@ int	ft_printf(const char *fmt, ...)
 	if (!fmt)
 		return (-1);
 	va_start(ptr, fmt);
-	sum_print_bytes = 0;
-	info.fmt_idx = 0;
-	errno = 0;
+	init_printf_param(&info.fmt_idx, &sum_print_bytes);
 	while (fmt[info.fmt_idx] && errno == 0)
 	{
 		while (fmt[info.fmt_idx] != '%' && fmt[info.fmt_idx] && errno == 0)
