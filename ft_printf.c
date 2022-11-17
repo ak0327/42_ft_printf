@@ -85,7 +85,7 @@ int	ft_printf(const char *fmt, ...)
 		return (-1);
 	va_start(ptr, fmt);
 	init_printf_param(&info.fmt_idx, &sum_print_bytes);
-	while (fmt[info.fmt_idx] && errno == 0)
+	while (fmt[info.fmt_idx] && errno == 0 && sum_print_bytes >= 0)
 	{
 		while (fmt[info.fmt_idx] != '%' && fmt[info.fmt_idx] && errno == 0)
 			sum_print_bytes += ft_putchar_for_printf(fmt[info.fmt_idx++], 1);
@@ -95,7 +95,7 @@ int	ft_printf(const char *fmt, ...)
 		print_bytes = print_fmt((char *)fmt, &info, &ptr);
 		sum_print_bytes += print_bytes;
 		if (errno != 0 || print_bytes == -1 || sum_print_bytes > INT_MAX)
-			return (-1);
+			sum_print_bytes = -1;
 		info.fmt_idx++;
 	}
 	va_end(ptr);
